@@ -1,4 +1,4 @@
-package fr.spc.leosoliveres.chaldeas
+package fr.spc.leosoliveres.chaldeas.model
 
 class Faisceau {
     // demander signification des specs

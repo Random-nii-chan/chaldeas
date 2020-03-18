@@ -1,4 +1,4 @@
-package fr.spc.leosoliveres.chaldeas
+package fr.spc.leosoliveres.chaldeas.model
 
 open class Site {
     private var nom:String
