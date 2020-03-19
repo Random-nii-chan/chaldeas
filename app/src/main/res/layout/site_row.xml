@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="start"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/nomSite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:breakStrategy="simple"
+                android:padding="8sp"
+                android:text="Nom de relais qui est bien trop long pour rentrer sur une ligne"
+                android:textSize="40sp"/>
+
+            <TextView
+                android:id="@+id/typeSite"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="30sp"
+                android:padding="8sp"
+                android:text="Relais radio grande portée"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            >
+            <TextView
+                android:id="@+id/latitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8sp"
+                android:layout_gravity="end"
+                android:text="2,78561245"
+                android:textSize="30sp" />
+            <TextView
+                android:id="@+id/longitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8sp"
+                android:layout_gravity="end"
+                android:text="5.65494984"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </TableRow>
+</TableLayout>

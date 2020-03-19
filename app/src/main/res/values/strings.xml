@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Chaldeas</string>
+    <string name="formatted_longitude">Longitude : %1$s</string>
+    <string name="formatted_latitude">Latitude : %1$s</string>
 </resources>

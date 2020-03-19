@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import fr.spc.leosoliveres.chaldeas.R
 
+
 class StationDetailFragment : Fragment() {
     companion object{
         fun newInstance(): StationDetailFragment{
@@ -15,6 +16,6 @@ class StationDetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_station_detail, container, false)
+        return inflater.inflate(R.layout.fragment_site_detail, container, false)
     }
 }

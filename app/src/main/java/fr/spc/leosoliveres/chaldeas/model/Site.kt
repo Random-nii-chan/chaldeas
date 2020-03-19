@@ -1,21 +1,25 @@
 package fr.spc.leosoliveres.chaldeas.model
 
 open class Site {
-    private var nom:String
-    private var latitude:Double
-    private var longitude:Double
-    private var energie:String
-    private var acces:String
-    private var proprietaire:String
-    private var type:String
-
-    get() = field
+    var nom:String
+    var latitude:Float
+    var longitude:Float
+    var energie:String
+    var acces:String
+    var proprietaire:String
+    var type:String
 
     set(value){
         field = value
     }
 
-    constructor(_nom:String, _latitude:Double, _longitude:Double, _energie:String, _acces:String, _proprietaire:String, _type:String) {
+    constructor(_nom:String,
+                _latitude:Float,
+                _longitude:Float,
+                _energie:String="Non renseigné",
+                _acces:String="Non renseigné",
+                _proprietaire:String="Non renseigné",
+                _type:String="Non renseigné") {
         nom = _nom
         latitude = _latitude
         longitude = _longitude
