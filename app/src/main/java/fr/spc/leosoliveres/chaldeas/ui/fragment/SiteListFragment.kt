@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.chaldeas.R
@@ -25,13 +26,11 @@ class SiteListFragment : Fragment(R.layout.site_list_fragment) {
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 
-
 		siteRecyclerView.layoutManager = LinearLayoutManager(activity)
 		siteRecyclerView.adapter = SitesAdapter(initVariables(20))
 	}
 
 	private fun initVariables(count:Int):ArrayList<Site>{
-		//...
 		val sites : ArrayList<Site> = ArrayList()
 
 		sites.add(Site("Nom de relais qui est bien trop long pour rentrer sur une ligne",-5.45457856f,3.89164832f))

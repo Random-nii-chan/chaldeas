@@ -1,31 +1,20 @@
 package fr.spc.leosoliveres.chaldeas.model
 
-open class Site {
-    var nom:String
-    var latitude:Float
-    var longitude:Float
-    var energie:String
-    var acces:String
-    var proprietaire:String
-    var type:String
+open class Site(
+    _nom: String,
+    _latitude: Float,
+    _longitude: Float,
+    _energie: String = "Non renseigné",
+    _acces: String = "Non renseigné",
+    _proprietaire: String = "Non renseigné",
+    _type: String = "Type d'installation inconnu"
+) {
+    var nom:String = _nom
+    var latitude:Float = _latitude
+    var longitude:Float = _longitude
+    var energie:String = _energie
+    var acces:String = _acces
+    var proprietaire:String = _proprietaire
+    var type:String = _type
 
-    set(value){
-        field = value
-    }
-
-    constructor(_nom:String,
-                _latitude:Float,
-                _longitude:Float,
-                _energie:String="Non renseigné",
-                _acces:String="Non renseigné",
-                _proprietaire:String="Non renseigné",
-                _type:String="Type d'installation inconnu") {
-        nom = _nom
-        latitude = _latitude
-        longitude = _longitude
-        energie = _energie
-        acces = _acces
-        proprietaire = _proprietaire
-        type = _type
-    }
 }

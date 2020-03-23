@@ -31,11 +31,10 @@ class SitesAdapter(private val sites: ArrayList<Site>) : RecyclerView.Adapter<Si
 
 	override fun getItemCount(): Int = sites.size
 
-	class ViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView) {
+	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val nomSite: TextView = itemView.findViewById(R.id.nomSite)
 		val typeSite: TextView = itemView.findViewById(R.id.typeSite)
 		val latitude: TextView = itemView.findViewById(R.id.latitude)
 		val longitude: TextView = itemView.findViewById(R.id.longitude)
 	}
-
 }
