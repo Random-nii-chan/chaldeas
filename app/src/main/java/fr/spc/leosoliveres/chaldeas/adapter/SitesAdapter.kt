@@ -1,5 +1,6 @@
 package fr.spc.leosoliveres.chaldeas.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +18,15 @@ class SitesAdapter(private val sites: ArrayList<Site>) : RecyclerView.Adapter<Si
 	}
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		val longitude = sites[position].longitude.toString()
-		val latitude = sites[position].latitude.toString()
+		val site = sites[position]
 
-		holder.nomSite.text = sites[position].nom
-		holder.typeSite.text = sites[position].type
-		holder.longitude.text = String.format("Longitude : $longitude")
-		holder.latitude.text = String.format("Latitude : $latitude")
+		val longitude = site.longitude.toString()
+		val latitude = site.latitude.toString()
+
+		holder.nomSite.text = site.nom
+		holder.typeSite.text = site.type
+		holder.longitude.text = String.format("Lon. : $longitude")
+		holder.latitude.text = String.format("Lat. : $latitude")
 	}
 
 	override fun getItemCount(): Int = sites.size

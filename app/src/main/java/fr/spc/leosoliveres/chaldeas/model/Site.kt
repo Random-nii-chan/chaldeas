@@ -19,7 +19,7 @@ open class Site {
                 _energie:String="Non renseigné",
                 _acces:String="Non renseigné",
                 _proprietaire:String="Non renseigné",
-                _type:String="Non renseigné") {
+                _type:String="Type d'installation inconnu") {
         nom = _nom
         latitude = _latitude
         longitude = _longitude
