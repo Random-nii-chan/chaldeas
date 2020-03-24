@@ -28,7 +28,7 @@ class SiteDetailFragment : Fragment(R.layout.site_list_fragment) {
 		name.text = site.name
 		infrastructure_type.text = site.type
 		longitude.text = String.format("Lon. : $longitudeData")
-		latitude.text = String.format("Lon. : $latitudeData")
+		latitude.text = String.format("Lat. : $latitudeData")
 		owner.text = site.owner
 		access.text = site.access
 		power_source.text = site.powerSource
