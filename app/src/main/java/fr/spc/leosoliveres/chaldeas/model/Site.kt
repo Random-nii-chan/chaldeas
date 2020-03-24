@@ -5,11 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Site(
-    val nom: String,
+    val name: String,
     val latitude: Float,
     val longitude: Float,
-    val energie: String = "Non renseigné",
-    val acces: String = "Non renseigné",
-    val proprietaire: String = "Non renseigné",
+    val powerSource: String = "Non renseigné",
+    val access: String = "Non renseigné",
+    val owner: String = "Non renseigné",
     val type: String = "Type d'installation inconnu"
 ) : Parcelable

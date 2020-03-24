@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.chaldeas.R
@@ -32,7 +35,7 @@ class SiteListFragment : Fragment(R.layout.site_list_fragment),OnItemClickListen
 	}
 
 	override fun onItemClicked(site:Site){
-		Toast.makeText(activity, site.nom, Toast.LENGTH_LONG).show()
+		findNavController().navigate(R.id.nav_view_site_details,bundleOf("site" to site))
 	}
 
 	private fun initVariables(count:Int):ArrayList<Site>{

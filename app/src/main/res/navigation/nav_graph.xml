@@ -10,8 +10,12 @@
         android:name="fr.spc.leosoliveres.chaldeas.ui.fragment.SiteListFragment"
         android:label="SiteListFragment" >
         <action
-            android:id="@+id/view_dite_details"
-            app:destination="@id/siteDetailFragment" />
+            android:id="@+id/nav_view_site_details"
+            app:destination="@id/siteDetailFragment">
+            <argument
+                android:name="site"
+                app:argType="fr.spc.leosoliveres.chaldeas.model.Site"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/siteDetailFragment"

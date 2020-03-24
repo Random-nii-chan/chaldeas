@@ -16,7 +16,7 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val longitude = site.longitude.toString()
 		val latitude = site.latitude.toString()
 
-		this.nomSite.text = site.nom
+		this.nomSite.text = site.name
 		this.typeSite.text = site.type
 		this.longitude.text = String.format("Lon. : $longitude")
 		this.latitude.text = String.format("Lat. : $latitude")
