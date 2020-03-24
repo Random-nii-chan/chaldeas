@@ -5,15 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.chaldeas.R
+import fr.spc.leosoliveres.chaldeas.adapter.OnItemClickListener
 import fr.spc.leosoliveres.chaldeas.adapter.SitesAdapter
 import fr.spc.leosoliveres.chaldeas.model.Site
 import kotlinx.android.synthetic.main.site_list_fragment.*
 
-class SiteListFragment : Fragment(R.layout.site_list_fragment) {
+class SiteListFragment : Fragment(R.layout.site_list_fragment),OnItemClickListener {
 
 	companion object {
 		fun newInstance() = SiteListFragment()
@@ -27,7 +29,11 @@ class SiteListFragment : Fragment(R.layout.site_list_fragment) {
 		super.onActivityCreated(savedInstanceState)
 
 		siteRecyclerView.layoutManager = LinearLayoutManager(activity)
-		siteRecyclerView.adapter = SitesAdapter(initVariables(20))
+		siteRecyclerView.adapter = SitesAdapter(initVariables(20),this)
+	}
+
+	override fun onItemClicked(site:Site){
+		Toast.makeText(activity, site.nom, Toast.LENGTH_LONG).show()
 	}
 
 	private fun initVariables(count:Int):ArrayList<Site>{
