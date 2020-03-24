@@ -2,12 +2,7 @@ package fr.spc.leosoliveres.chaldeas.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.recyclerview.widget.LinearLayoutManager
 import fr.spc.leosoliveres.chaldeas.R
-import fr.spc.leosoliveres.chaldeas.adapter.SitesAdapter
-import fr.spc.leosoliveres.chaldeas.model.Site
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
