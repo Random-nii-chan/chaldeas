@@ -3,4 +3,6 @@
     <string name="formatted_longitude">Longitude : %1$s</string>
     <string name="formatted_latitude">Latitude : %1$s</string>
     <string name="return_button">Retour</string>
+    <string name="about">À propos</string>
+    <string name="search">Rechercher</string>
 </resources>
