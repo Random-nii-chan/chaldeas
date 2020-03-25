@@ -11,9 +11,8 @@ class MainActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		setSupportActionBar(findViewById(R.id.toolbar))
-		supportActionBar?.setDisplayShowHomeEnabled(true)
-		supportActionBar?.setLogo(R.mipmap.ic_launcher)
-		supportActionBar?.setDisplayUseLogoEnabled(true)
+		supportActionBar?.setDisplayShowHomeEnabled(true);
+		supportActionBar?.setHomeButtonEnabled(true)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
