@@ -6,4 +6,5 @@
     <color name="colorFontLight">#FFFFFF</color>
     <color name="colorFontDark">#000000</color>
     <color name="colorFontMedium">#888888</color>
+    <color name="colorDeletion">#EB4034</color>
 </resources>

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Site
 
-class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ViewHolderSite(itemView: View) : RecyclerView.ViewHolder(itemView) {
 	val nomSite: TextView = itemView.findViewById(R.id.nomSite)
 	val typeSite: TextView = itemView.findViewById(R.id.typeSite)
 	val latitude: TextView = itemView.findViewById(R.id.latitude)

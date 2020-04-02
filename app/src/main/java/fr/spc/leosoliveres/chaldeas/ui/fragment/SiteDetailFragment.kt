@@ -21,7 +21,7 @@ class SiteDetailFragment : Fragment(R.layout.site_list_fragment) {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		var site = arguments!!.getParcelable<Site>("site")!!
+		val site = arguments!!.getParcelable<Site>("site")!!
 		val latitudeData = site.latitude
 		val longitudeData = site.longitude
 
