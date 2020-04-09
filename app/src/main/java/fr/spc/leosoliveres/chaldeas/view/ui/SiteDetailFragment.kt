@@ -1,4 +1,4 @@
-package fr.spc.leosoliveres.chaldeas.ui.fragment
+package fr.spc.leosoliveres.chaldeas.view.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -12,4 +12,12 @@ data class Site(
     val access: String = "Type d'accès non renseigné",
     val owner: String = "Propriétaire non renseigné",
     val type: String = "Type d'installation inconnu"
-) : Parcelable
+) : Parcelable {
+    fun lonString():String {
+        return String.format("Lon. : $longitude")
+    }
+
+    fun latString():String {
+        return String.format("Lat. : $latitude")
+    }
+}

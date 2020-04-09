@@ -1,19 +1,28 @@
 <resources>
     <string name="app_name">Chaldeas</string>
+
     <string name="return_button">Retour</string>
-    <string name="about">À propos</string>
-    <string name="search">Rechercher</string>
-    <string name="settings">Paramètres</string>
     <string name="add">Ajouter</string>
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
+
+    <string name="apply">Appliquer</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="edit_report">Éditer le rapport</string>
+    <string name="edit_measure">Éditer la mesure</string>
+    <string name="search">Rechercher</string>
+    <string name="settings">Paramètres</string>
+    <string name="about">À propos</string>
+
+    <string name="hint_measure_name">Nom de la mesure</string>
+    <string name="hint_measure_unit">Unité</string>
+    <string name="hint_measure_abriged">Unité abrégée</string>
 
     <string name="choose_family">Choisir une catégorie</string>
     <string-array name="values_family">
         <item>Faisceau 1</item>
         <item>Faisceau 2</item>
         <item>Radio</item>
-        <item>Batteries</item>
-        <item>Autres</item>
     </string-array>
 </resources>
