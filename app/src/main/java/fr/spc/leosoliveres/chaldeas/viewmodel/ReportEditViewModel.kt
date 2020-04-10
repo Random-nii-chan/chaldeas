@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import fr.spc.leosoliveres.chaldeas.model.Measure
 
 class ReportEditViewModel() : ViewModel() {
-	private var _measures = MutableLiveData<List<Measure>>()
-	val measures : LiveData<List<Measure>>
+	private var _measures = MutableLiveData<ArrayList<Measure>>()
+	val measures : LiveData<ArrayList<Measure>>
 		get() = _measures
 
 	init {

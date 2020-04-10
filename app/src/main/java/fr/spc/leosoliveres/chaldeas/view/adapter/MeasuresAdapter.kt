@@ -11,11 +11,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Measure
+import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
 
-class MeasuresAdapter(private val measures: ArrayList<Measure>) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
+class MeasuresAdapter(private val measures: ArrayList<Measure>, context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
+
+	private lateinit var viewModel:ReportEditViewModel
+
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val view:View = LayoutInflater.from(parent.context).inflate(R.layout.measure_row, parent, false)
 		return ViewHolder(view)
@@ -28,6 +34,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>) : RecyclerView.A
 
 		val item = measures[holderSite.adapterPosition]
 
+		/*
 		holderSite.itemView.findViewById<Button>(R.id.button_delete).setOnClickListener {
 			Toast.makeText(context,"Suppression de ${item.name}",Toast.LENGTH_SHORT).show()
 		}
@@ -36,8 +43,10 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>) : RecyclerView.A
 			val alertDialogBuilder = createAlertEdit(context,item)
 			alertDialogBuilder.show()
 		}
+		 */
 	}
 
+	/*
 	@SuppressLint("InflateParams")
 	private fun createAlertEdit(ctx: Context,m:Measure):AlertDialog{
 		val builder = AlertDialog.Builder(ctx)
@@ -65,6 +74,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>) : RecyclerView.A
 		mainView.findViewById<EditText>(R.id.unit_full).setText(measure.unitFull)
 		mainView.findViewById<EditText>(R.id.unit_abriged).setText(measure.unitAbriged)
 	}
+	 */
 
 	override fun getItemCount(): Int = measures.size
 
