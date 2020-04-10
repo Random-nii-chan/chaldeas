@@ -59,10 +59,6 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>) : RecyclerView.A
 		return builder.create()
 	}
 
-	private fun editMeasure(){
-
-	}
-
 	private fun autofill(mainView:View, measure:Measure){
 		//trouver les enfants et les remplir des données de la mesure
 		mainView.findViewById<EditText>(R.id.measure_name).setText(measure.name)
