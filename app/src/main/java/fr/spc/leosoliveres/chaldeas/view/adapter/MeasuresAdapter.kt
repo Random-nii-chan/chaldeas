@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,18 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
+import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
+import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
-class MeasuresAdapter(private val measures: ArrayList<Measure>, context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
+class MeasuresAdapter(private val measures: MutableList<Measure>, private val context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
 
+	private lateinit var viewModelFactory: ReportEditViewModelFactory
 	private lateinit var viewModel:ReportEditViewModel
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+		viewModelFactory = ReportEditViewModelFactory()
+		viewModel = ViewModelProviders.of(this.context,viewModelFactory).get(ReportEditViewModel::class.java)
+
 		val view:View = LayoutInflater.from(parent.context).inflate(R.layout.measure_row, parent, false)
 		return ViewHolder(view)
 	}
@@ -34,21 +41,15 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>, context:Fragment
 
 		val item = measures[holderSite.adapterPosition]
 
-		/*
-		holderSite.itemView.findViewById<Button>(R.id.button_delete).setOnClickListener {
-			Toast.makeText(context,"Suppression de ${item.name}",Toast.LENGTH_SHORT).show()
-		}
+		holderSite.itemView.findViewById<Button>(R.id.button_delete).setOnClickListener {showAlertDelete(context,item)}
 
-		holderSite.itemView.findViewById<Button>(R.id.button_edit).setOnClickListener {
-			val alertDialogBuilder = createAlertEdit(context,item)
-			alertDialogBuilder.show()
-		}
-		 */
+		holderSite.itemView.findViewById<Button>(R.id.button_edit).setOnClickListener {showAlertEdit(context,item)}
+
+		holderSite.itemView.findViewById<Button>(R.id.button_duplicate).setOnClickListener { viewModel.duplicateMeasure(item) }
 	}
 
-	/*
 	@SuppressLint("InflateParams")
-	private fun createAlertEdit(ctx: Context,m:Measure):AlertDialog{
+	private fun showAlertEdit(ctx: Context,m:Measure){
 		val builder = AlertDialog.Builder(ctx)
 		val inflater = LayoutInflater.from(ctx)
 		val dialogView = inflater.inflate(R.layout.dialog_measure_edit,null)
@@ -58,23 +59,40 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>, context:Fragment
 		builder.setView(dialogView)
 		builder.setTitle(R.string.edit_measure).apply{
 			setPositiveButton(R.string.apply) { _: DialogInterface, _: Int ->
-				Toast.makeText(ctx,"Application des changements",Toast.LENGTH_SHORT).show()
+				val newData = Measure(
+					dialogView.measure_name.text.toString(),
+					dialogView.unit_full.text.toString(),
+					dialogView.unit_abriged.text.toString())
+				viewModel.editMeasure(m,newData)
 			}
 			setNegativeButton(R.string.cancel) { dialog:DialogInterface, _:Int ->
-				Toast.makeText(ctx,"Annulation des changements",Toast.LENGTH_SHORT).show()
-				dialog.cancel()
+				dialog.dismiss()
 			}
 		}
-		return builder.create()
+		builder.show()
+	}
+
+	@SuppressLint("InflateParams")
+	private fun showAlertDelete(ctx:Context, m:Measure) {
+		val builder = AlertDialog.Builder(ctx)
+
+		builder.setTitle(R.string.delete_measure).apply{
+			setPositiveButton(R.string.yes) { _: DialogInterface, _: Int ->
+				viewModel.deleteMeasure(m)
+			}
+			setNegativeButton(R.string.no) { dialog:DialogInterface, _:Int ->
+				dialog.dismiss()
+			}
+		}
+		builder.show()
 	}
 
 	private fun autofill(mainView:View, measure:Measure){
-		//trouver les enfants et les remplir des données de la mesure
+		//trouver les vues-enfants et les remplir des données de la mesure
 		mainView.findViewById<EditText>(R.id.measure_name).setText(measure.name)
 		mainView.findViewById<EditText>(R.id.unit_full).setText(measure.unitFull)
 		mainView.findViewById<EditText>(R.id.unit_abriged).setText(measure.unitAbriged)
 	}
-	 */
 
 	override fun getItemCount(): Int = measures.size
 

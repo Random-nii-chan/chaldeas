@@ -14,6 +14,10 @@ data class Measure(
 	constructor(_name:String,_unitFull:String,_unitAbriged:String):this(0,_name,_unitFull,_unitAbriged)
 
 	fun allUnits():String{
-		return String.format("$unitFull ($unitAbriged)")
+		return "$unitFull - $unitAbriged"
+	}
+
+	override fun toString():String {
+		return "$name - $unitFull - $unitAbriged"
 	}
 }

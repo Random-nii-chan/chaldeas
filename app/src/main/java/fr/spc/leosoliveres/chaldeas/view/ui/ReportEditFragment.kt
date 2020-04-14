@@ -1,10 +1,12 @@
 package fr.spc.leosoliveres.chaldeas.view.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -40,7 +42,8 @@ class ReportEditFragment : Fragment(R.layout.report_edit_fragment) {
 		measureRecyclerView.layoutManager = LinearLayoutManager(activity)
 		measureRecyclerView.adapter = MeasuresAdapter(viewModel.initVariables(),this)
 
-		viewModel.measures.observe(viewLifecycleOwner, Observer {newMeasures ->
+		viewModel.measures.observe(viewLifecycleOwner, Observer { newMeasures ->
+			Log.i("adapter swap","BIP BIP CA MARCHE")
 			measureRecyclerView.swapAdapter(MeasuresAdapter(newMeasures,this),true)
 		})
 	}

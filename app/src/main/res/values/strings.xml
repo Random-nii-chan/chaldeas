@@ -5,12 +5,16 @@
     <string name="add">Ajouter</string>
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
+    <string name="duplicate">Dupliquer</string>
 
     <string name="apply">Appliquer</string>
     <string name="cancel">Annuler</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 
     <string name="edit_report">Éditer le rapport</string>
     <string name="edit_measure">Éditer la mesure</string>
+    <string name="delete_measure">Supprimer la mesure ?</string>
     <string name="search">Rechercher</string>
     <string name="settings">Paramètres</string>
     <string name="about">À propos</string>
