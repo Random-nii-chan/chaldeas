@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/reportEditFragment">
+    app:startDestination="@id/siteListFragment">
 
     <fragment
         android:id="@+id/siteListFragment"
         android:name="fr.spc.leosoliveres.chaldeas.view.ui.SiteListFragment"
         android:label="SiteListFragment" >
         <action
-            android:id="@+id/nav_view_site_details"
-            app:destination="@id/siteDetailFragment">
+            android:id="@+id/action_siteListFragment_siteDetailFragment"
+            app:destination="@id/siteDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim">
             <argument
                 android:name="site"
-                app:argType="fr.spc.leosoliveres.chaldeas.model.Site"/>
+                app:argType="fr.spc.leosoliveres.chaldeas.model.Site" />
         </action>
     </fragment>
     <fragment
@@ -27,6 +31,10 @@
         android:name="fr.spc.leosoliveres.chaldeas.view.ui.ReportEditFragment"
         android:label="ReportEditFragment" />
     <action
-        android:id="@+id/global_reportEditFragment"
-        app:destination="@id/reportEditFragment" />
+        android:id="@+id/action_global_editFragment"
+        app:destination="@id/reportEditFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>

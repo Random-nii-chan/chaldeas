@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.navigation.Navigation
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import fr.spc.leosoliveres.chaldeas.R
 
 class MainActivity : AppCompatActivity() {
@@ -13,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		setSupportActionBar(findViewById(R.id.toolbar))
-		supportActionBar?.setDisplayShowHomeEnabled(true);
-		supportActionBar?.setHomeButtonEnabled(true)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -23,12 +23,11 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		return when (item.itemId) {
-			R.id.editReport -> {
-				Navigation.findNavController(findViewById(R.id.editReport)).navigate(R.id.global_reportEditFragment)
-				true
+		when(val id = item.itemId) {
+			R.id.menuitem_edit_report -> {
+				findNavController(id).navigate(R.id.action_global_editFragment)
 			}
-			else -> super.onOptionsItemSelected(item)
 		}
+		return super.onOptionsItemSelected(item)
 	}
 }

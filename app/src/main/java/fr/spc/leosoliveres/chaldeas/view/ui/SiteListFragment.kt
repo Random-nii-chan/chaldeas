@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,7 +34,7 @@ class SiteListFragment : Fragment(R.layout.site_list_fragment),OnItemClickListen
 	}
 
 	override fun onItemClicked(site:Site){
-		findNavController().navigate(R.id.nav_view_site_details,bundleOf("site" to site))
+		findNavController().navigate(R.id.action_siteListFragment_siteDetailFragment,bundleOf("site" to site))
 	}
 
 	private fun initVariables(count:Int):ArrayList<Site>{

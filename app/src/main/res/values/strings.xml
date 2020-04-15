@@ -3,6 +3,7 @@
 
     <string name="return_button">Retour</string>
     <string name="add">Ajouter</string>
+    <string name="add_measure">Ajouter une mesure</string>
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
     <string name="duplicate">Dupliquer</string>
