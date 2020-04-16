@@ -7,6 +7,7 @@
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
     <string name="duplicate">Dupliquer</string>
+    <string name="rename">Renommer</string>
 
     <string name="apply">Appliquer</string>
     <string name="cancel">Annuler</string>

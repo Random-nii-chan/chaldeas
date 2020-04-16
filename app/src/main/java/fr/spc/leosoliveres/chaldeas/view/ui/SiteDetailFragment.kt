@@ -10,7 +10,7 @@ import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Site
 import kotlinx.android.synthetic.main.fragment_site_detail.*
 
-class SiteDetailFragment : Fragment(R.layout.site_list_fragment) {
+class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?

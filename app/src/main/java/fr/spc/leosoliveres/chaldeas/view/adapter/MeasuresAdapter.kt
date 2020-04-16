@@ -21,7 +21,7 @@ import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
-class MeasuresAdapter(private val measures: MutableList<Measure>, private val context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
+class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
 
 	private lateinit var viewModelFactory: ReportEditViewModelFactory
 	private lateinit var viewModel:ReportEditViewModel
@@ -35,17 +35,19 @@ class MeasuresAdapter(private val measures: MutableList<Measure>, private val co
 	}
 
 	override fun onBindViewHolder(holderSite: ViewHolder, position: Int) {
-		val measure = measures[position]
+		val measure = measures?.get(position)
 		val context = holderSite.itemView.context
-		holderSite.bind(measure)
+		if (measure != null) {
+			holderSite.bind(measure)
+		}
 
-		val item = measures[holderSite.adapterPosition]
+		val item = measures?.get(holderSite.adapterPosition)
 
-		holderSite.itemView.findViewById<Button>(R.id.button_delete).setOnClickListener {showAlertDelete(context,item)}
+		holderSite.itemView.findViewById<Button>(R.id.button_delete).setOnClickListener {showAlertDelete(context,item!!)}
 
-		holderSite.itemView.findViewById<Button>(R.id.button_edit).setOnClickListener {showAlertEdit(context,item)}
+		holderSite.itemView.findViewById<Button>(R.id.button_edit).setOnClickListener {showAlertEdit(context,item!!)}
 
-		holderSite.itemView.findViewById<Button>(R.id.button_duplicate).setOnClickListener { viewModel.duplicateMeasure(item) }
+		holderSite.itemView.findViewById<Button>(R.id.button_duplicate).setOnClickListener { viewModel.duplicateMeasure(item!!) }
 	}
 
 	@SuppressLint("InflateParams")
@@ -94,7 +96,7 @@ class MeasuresAdapter(private val measures: MutableList<Measure>, private val co
 		mainView.findViewById<EditText>(R.id.unit_abriged).setText(measure.unitAbriged)
 	}
 
-	override fun getItemCount(): Int = measures.size
+	override fun getItemCount(): Int = measures!!.size
 
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		private val measureName: TextView = itemView.findViewById(R.id.measureName)

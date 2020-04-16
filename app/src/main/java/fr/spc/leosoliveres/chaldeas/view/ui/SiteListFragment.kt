@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,16 +13,16 @@ import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.view.adapter.OnItemClickListener
 import fr.spc.leosoliveres.chaldeas.view.adapter.SitesAdapter
 import fr.spc.leosoliveres.chaldeas.model.Site
-import kotlinx.android.synthetic.main.site_list_fragment.*
+import kotlinx.android.synthetic.main.fragment_site_list.*
 
-class SiteListFragment : Fragment(R.layout.site_list_fragment),OnItemClickListener {
+class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListener {
 
 	companion object {
 		fun newInstance() = SiteListFragment()
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-		return inflater.inflate(R.layout.site_list_fragment, container, false)
+		return inflater.inflate(R.layout.fragment_site_list, container, false)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
