@@ -20,6 +20,6 @@ data class Family(
 	}
 
 	override fun toString():String {
-		return "$name (${count()} mesures)"
+		return name
 	}
 }

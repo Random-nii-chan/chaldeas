@@ -23,13 +23,10 @@ import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
 class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
 
-	private lateinit var viewModelFactory: ReportEditViewModelFactory
-	private lateinit var viewModel:ReportEditViewModel
+	private var viewModelFactory: ReportEditViewModelFactory = ReportEditViewModelFactory()
+	private var viewModel:ReportEditViewModel = ViewModelProviders.of(this.context,viewModelFactory).get(ReportEditViewModel::class.java)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-		viewModelFactory = ReportEditViewModelFactory()
-		viewModel = ViewModelProviders.of(this.context,viewModelFactory).get(ReportEditViewModel::class.java)
-
 		val view:View = LayoutInflater.from(parent.context).inflate(R.layout.measure_row, parent, false)
 		return ViewHolder(view)
 	}

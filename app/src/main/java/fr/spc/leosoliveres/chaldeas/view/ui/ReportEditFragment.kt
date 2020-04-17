@@ -5,11 +5,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +25,7 @@ import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 import kotlinx.android.synthetic.main.fragment_report_edit.*
 
-class ReportEditFragment : Fragment(R.layout.fragment_report_edit) {
+class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 	private lateinit var viewModel:ReportEditViewModel
 	private lateinit var viewModelFactory:ReportEditViewModelFactory
@@ -37,6 +40,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit) {
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
 	}
 
+	@SuppressLint("ResourceType")
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 
@@ -49,10 +53,17 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit) {
 
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
 			//TODO quand on change ou édite la mesure active
+			family_name.text = newFamily.toString()
 		})
 
 		viewModel.familyList.observe(viewLifecycleOwner, Observer { newFamilylist ->
+			val strings = ArrayList<String>()
+			for(i in 1..newFamilylist.count()) strings.add(newFamilylist[i-1].toString())
 			//TODO quand on ajoute ou retire une famille de la bd
+			val spinner = view?.findViewById<Spinner>(R.id.family_spinner)
+			val spinnerAdapter = ArrayAdapter(activity?.baseContext!!,android.R.layout.simple_spinner_dropdown_item,strings)
+			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+			spinner!!.adapter = spinnerAdapter
 		})
 	}
 

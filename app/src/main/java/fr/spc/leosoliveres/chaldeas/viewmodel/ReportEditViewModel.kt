@@ -30,6 +30,10 @@ class ReportEditViewModel() : ViewModel() {
 		_measures.value = _currentFamily.value!!.measures
 	}
 
+	fun switchFamily(pos:Int) {
+		_currentFamily.value = _familyList.value!![pos]
+	}
+
 	fun editMeasure(m:Measure,newData:Measure) {
 		val index = _measures.value?.indexOf(m)
 		val temporaryList = _measures.value

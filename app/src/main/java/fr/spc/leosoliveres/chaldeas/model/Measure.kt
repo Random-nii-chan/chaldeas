@@ -11,7 +11,7 @@ data class Measure(
 	@ColumnInfo (name="UnitFull") val unitFull:String,
 	@ColumnInfo (name="UnitAbriged") val unitAbriged:String
 ){
-	constructor(_name:String,_unitFull:String,_unitAbriged:String):this(0,_name,_unitFull,_unitAbriged)
+	constructor(_name:String="nom non défini",_unitFull:String="unité non définie",_unitAbriged:String="indéf."):this(0,_name,_unitFull,_unitAbriged)
 
 	fun allUnits():String{
 		return "$unitFull - $unitAbriged"
