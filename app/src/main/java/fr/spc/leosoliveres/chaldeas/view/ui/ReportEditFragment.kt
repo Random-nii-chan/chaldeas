@@ -45,15 +45,11 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		super.onActivityCreated(savedInstanceState)
 
 		measureRecyclerView.layoutManager = LinearLayoutManager(activity)
-		measureRecyclerView.adapter = MeasuresAdapter(viewModel.measures.value,this)
-
-		viewModel.measures.observe(viewLifecycleOwner, Observer { newMeasures ->
-			measureRecyclerView.swapAdapter(MeasuresAdapter(newMeasures,this),true)
-		})
+		measureRecyclerView.adapter = MeasuresAdapter(viewModel.currentFamily.value!!.measures,this)
 
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
 			//TODO quand on change ou édite la mesure active
-			family_name.text = newFamily.toString()
+			measureRecyclerView.swapAdapter(MeasuresAdapter(newFamily.measures,this),true)
 		})
 
 		viewModel.familyList.observe(viewLifecycleOwner, Observer { newFamilylist ->

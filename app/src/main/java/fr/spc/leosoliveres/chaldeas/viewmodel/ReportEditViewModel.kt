@@ -5,61 +5,53 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
+import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
 
 class ReportEditViewModel() : ViewModel() {
-
-	//TODO: Faire une classe pour un regroupement de familles ?
 
 	private var _familyList = MutableLiveData<ArrayList<Family>>()
 	val familyList : LiveData<ArrayList<Family>>
 		get() = _familyList
 
-	private var currentFamilyIndex:Int=0
+	private var currentFamilyIndex : Int = 0
 
-	private var _currentFamily = MutableLiveData<Family>()
+	private var _currentFamily = PropertyAwareMutableLiveData<Family>()
 	val currentFamily : LiveData<Family>
-			get() = _currentFamily
-
-	private var _measures = MutableLiveData<ArrayList<Measure>>()
-	val measures : LiveData<ArrayList<Measure>>
-		get() = _measures
+		get() = _currentFamily
 
 	init {
 		_familyList.value = initFamilies()
 		_currentFamily.value = _familyList.value!![currentFamilyIndex]
-		_measures.value = _currentFamily.value!!.measures
 	}
 
-	fun switchFamily(pos:Int) {
-		_currentFamily.value = _familyList.value!![pos]
-	}
-
+	//Méthodes CRUD mesures
 	fun editMeasure(m:Measure,newData:Measure) {
-		val index = _measures.value?.indexOf(m)
-		val temporaryList = _measures.value
-		if (index != null) temporaryList?.set(index,newData)
+		val tempList = _currentFamily.value?.measures
+		val index = tempList?.indexOf(m)
+		if (index != null) tempList[index] = newData
 		//besoin d'assigner une valeur pour déclencher l'évènement d'observations
-		_measures.value = temporaryList
+		_currentFamily.value!!.measures = tempList!!
 	}
 
 	fun deleteMeasure(m:Measure) {
-		val tempList = _measures.value
+		val tempList = _currentFamily.value?.measures
 		tempList?.remove(m)
-		_measures.value = tempList
+		_currentFamily.value!!.measures = tempList!!
 	}
 
 	fun duplicateMeasure(m:Measure) {
-		val tempList = _measures.value
+		val tempList = _currentFamily.value?.measures
 		tempList?.add(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
-		_measures.value = tempList
+		_currentFamily.value!!.measures = tempList!!
 	}
 
 	fun addMeasure(m:Measure) {
-		val tempList = _measures.value
+		val tempList = _currentFamily.value?.measures
 		tempList?.add(m)
-		_measures.value = tempList
+		_currentFamily.value!!.measures = tempList!!
 	}
 
+	//initialisations
 	private fun initFamilies(count:Int=3):ArrayList<Family> {
 		val families = ArrayList<Family>()
 		for(i in 0..count) families.add(Family("Famille n°$i",initMeasures()))
