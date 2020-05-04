@@ -9,6 +9,8 @@ import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
 
 class ReportEditViewModel() : ViewModel() {
 
+	//Une classe qui contient tout
+
 	private var _familyList = MutableLiveData<ArrayList<Family>>()
 	val familyList : LiveData<ArrayList<Family>>
 		get() = _familyList
@@ -24,6 +26,18 @@ class ReportEditViewModel() : ViewModel() {
 		_currentFamily.value = _familyList.value!![currentFamilyIndex]
 	}
 
+	fun changeFamily(i:Int) {
+		val maxValue = _familyList.value!!.size -1
+		currentFamilyIndex = if(i in 0..maxValue) i else maxValue
+		_currentFamily.value = _familyList.value!![currentFamilyIndex]
+	}
+
+	fun familiesToString():ArrayList<String> {
+		val al = ArrayList<String>()
+		for(i in 0 until _familyList.value!!.size) al.add(_familyList.value!![i].toString())
+		return al
+	}
+
 	//Méthodes CRUD mesures
 	fun editMeasure(m:Measure,newData:Measure) {
 		val tempList = _currentFamily.value?.measures
@@ -34,9 +48,7 @@ class ReportEditViewModel() : ViewModel() {
 	}
 
 	fun deleteMeasure(m:Measure) {
-		val tempList = _currentFamily.value?.measures
-		tempList?.remove(m)
-		_currentFamily.value!!.measures = tempList!!
+		_currentFamily.value!!.removeMeasure(_currentFamily.value!!.getIndex(m))
 	}
 
 	fun duplicateMeasure(m:Measure) {
@@ -46,9 +58,13 @@ class ReportEditViewModel() : ViewModel() {
 	}
 
 	fun addMeasure(m:Measure) {
-		val tempList = _currentFamily.value?.measures
-		tempList?.add(m)
-		_currentFamily.value!!.measures = tempList!!
+		val tempList = _currentFamily.value!!.measures
+		tempList.add(m)
+		_currentFamily.value!!.measures = tempList
+	}
+
+	fun renameFamily(n:String) {
+		currentFamily.value!!.name = n
 	}
 
 	//initialisations

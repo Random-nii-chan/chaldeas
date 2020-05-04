@@ -5,19 +5,17 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.chaldeas.R
+import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.view.adapter.MeasuresAdapter
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
@@ -37,6 +35,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		viewModelFactory = ReportEditViewModelFactory()
 		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
+
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
 	}
 
@@ -45,22 +44,48 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		super.onActivityCreated(savedInstanceState)
 
 		measureRecyclerView.layoutManager = LinearLayoutManager(activity)
-		measureRecyclerView.adapter = MeasuresAdapter(viewModel.currentFamily.value!!.measures,this)
+		measureRecyclerView.adapter = MeasuresAdapter(viewModel.currentFamily.value!!._measures,this)
+
+		family_spinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,viewModel.familiesToString())
+
+		family_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+			//getitematposition
+			override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+				Toast.makeText(context, parent?.getItemAtPosition(p2).toString(), Toast.LENGTH_LONG).show()
+			}
+
+			override fun onNothingSelected(parent: AdapterView<*>?) {
+
+			}
+		}
 
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
 			//TODO quand on change ou édite la mesure active
-			measureRecyclerView.swapAdapter(MeasuresAdapter(newFamily.measures,this),true)
+			updateMeasures(newFamily)
+			updateFamilyName(newFamily.name)
 		})
 
 		viewModel.familyList.observe(viewLifecycleOwner, Observer { newFamilylist ->
 			val strings = ArrayList<String>()
 			for(i in 1..newFamilylist.count()) strings.add(newFamilylist[i-1].toString())
-			//TODO quand on ajoute ou retire une famille de la bd
-			val spinner = view?.findViewById<Spinner>(R.id.family_spinner)
-			val spinnerAdapter = ArrayAdapter(activity?.baseContext!!,android.R.layout.simple_spinner_dropdown_item,strings)
-			spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-			spinner!!.adapter = spinnerAdapter
+			updateFamilyList(strings)
 		})
+
+		rename_button.setOnClickListener {
+			showFamilyRenameDialog(context)
+		}
+	}
+
+	private fun updateMeasures(newFamily:Family) {
+		measureRecyclerView.swapAdapter(MeasuresAdapter(newFamily.measures,this),true)
+	}
+
+	private fun updateFamilyName(newName:String) {
+		family_name.text = newName
+	}
+
+	private fun updateFamilyList(list:ArrayList<String>) {
+		family_spinner.adapter = ArrayAdapter(activity?.baseContext!!,android.R.layout.simple_spinner_dropdown_item,list)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,6 +108,21 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 					dialogView.unit_full.text.toString(),
 					dialogView.unit_abriged.text.toString())
 				viewModel.addMeasure(newData)
+			}
+			setNegativeButton(R.string.cancel) { dialog: DialogInterface, _:Int ->
+				dialog.dismiss()
+			}
+		}
+		builder.show()
+	}
+
+	private fun showFamilyRenameDialog(ctx:Context?) {
+		val builder = AlertDialog.Builder(ctx)
+		val dialogView = EditText(ctx)
+		builder.setView(dialogView)
+		builder.setTitle(R.string.rename).apply{
+			setPositiveButton(R.string.rename) { _: DialogInterface, _: Int ->
+				viewModel.renameFamily(dialogView.text.toString())
 			}
 			setNegativeButton(R.string.cancel) { dialog: DialogInterface, _:Int ->
 				dialog.dismiss()

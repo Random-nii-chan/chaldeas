@@ -1,27 +1,35 @@
 <resources>
     <string name="app_name">Chaldeas</string>
 
-    <string name="return_button">Retour</string>
+    <!--Confirmations-->
+    <string name="apply">Appliquer</string>
+    <string name="yes">Oui</string>
+    <string name="rename">Renommer</string>
     <string name="add">Ajouter</string>
+
+
+    <!--Annulations-->
+    <string name="no">Non</string>
+    <string name="cancel">Annuler</string>
+    <string name="return_button">Retour</string>
+
+    <!--Actions-->
     <string name="add_measure">Ajouter une mesure</string>
+    <string name="edit_measure">Éditer la mesure</string>
+    <string name="delete_measure">Supprimer la mesure ?</string>
+    <string name="edit_report">Éditer le rapport</string>
+    <string name="search">Rechercher</string>
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
     <string name="duplicate">Dupliquer</string>
-    <string name="rename">Renommer</string>
 
-    <string name="apply">Appliquer</string>
-    <string name="cancel">Annuler</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-
-    <string name="edit_report">Éditer le rapport</string>
-    <string name="edit_measure">Éditer la mesure</string>
-    <string name="delete_measure">Supprimer la mesure ?</string>
-    <string name="search">Rechercher</string>
+    <!--Menus-->
     <string name="settings">Paramètres</string>
     <string name="about">À propos</string>
 
+    <!--Hints-->
     <string name="hint_measure_name">Nom de la mesure</string>
+    <string name="hint_family_name">Nom de la famille</string>
     <string name="hint_measure_unit">Unité</string>
     <string name="hint_measure_abriged">Unité abrégée</string>
 
