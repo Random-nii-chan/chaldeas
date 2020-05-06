@@ -15,8 +15,10 @@
 
     <!--Actions-->
     <string name="add_measure">Ajouter une mesure</string>
+    <string name="add_family">Ajouter une famille</string>
     <string name="edit_measure">Éditer la mesure</string>
     <string name="delete_measure">Supprimer la mesure ?</string>
+    <string name="delete_family">Supprimer la famille ?</string>
     <string name="edit_report">Éditer le rapport</string>
     <string name="search">Rechercher</string>
     <string name="delete">Supprimer</string>
@@ -26,6 +28,7 @@
     <!--Menus-->
     <string name="settings">Paramètres</string>
     <string name="about">À propos</string>
+    <string name="no_families">Aucune famille créée</string>
 
     <!--Hints-->
     <string name="hint_measure_name">Nom de la mesure</string>

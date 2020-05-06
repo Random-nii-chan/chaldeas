@@ -9,8 +9,6 @@ import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
 
 class ReportEditViewModel() : ViewModel() {
 
-	//Une classe qui contient tout
-
 	private var _familyList = MutableLiveData<ArrayList<Family>>()
 	val familyList : LiveData<ArrayList<Family>>
 		get() = _familyList
@@ -25,6 +23,8 @@ class ReportEditViewModel() : ViewModel() {
 		_familyList.value = initFamilies()
 		_currentFamily.value = _familyList.value!![currentFamilyIndex]
 	}
+
+	fun getFamilyIndex():Int = currentFamilyIndex
 
 	fun changeFamily(i:Int) {
 		val maxValue = _familyList.value!!.size -1
@@ -63,8 +63,23 @@ class ReportEditViewModel() : ViewModel() {
 		_currentFamily.value!!.measures = tempList
 	}
 
+	//Méthodes CRUD Familles
 	fun renameFamily(n:String) {
-		currentFamily.value!!.name = n
+		_currentFamily.value!!.name = n
+	}
+
+	fun addFamily(f:Family) {
+		val tempList = _familyList.value
+		tempList!!.add(f)
+		_familyList.value = tempList
+		currentFamilyIndex = _familyList.value!!.size-1
+	}
+
+	fun deleteFamily(f:Family) {
+		val tempList = _familyList.value
+		tempList!!.remove(f)
+		_familyList.value = tempList
+		currentFamilyIndex--
 	}
 
 	//initialisations
