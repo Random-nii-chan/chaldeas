@@ -47,6 +47,11 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		}
 	}
 
+	override fun onStop() {
+		//TODO: sauvegarde dans la base Room sur onStop()
+		super.onStop()
+	}
+
 	@SuppressLint("ResourceType")
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)

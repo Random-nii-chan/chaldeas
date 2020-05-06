@@ -3,6 +3,7 @@ package fr.spc.leosoliveres.chaldeas.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+//TODO: convertir site en entité Room
 @Parcelize
 data class Site(
     val name: String,
