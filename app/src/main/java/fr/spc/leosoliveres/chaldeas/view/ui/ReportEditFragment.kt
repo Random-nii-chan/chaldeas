@@ -35,7 +35,8 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-		viewModelFactory = ReportEditViewModelFactory()
+		//TODO : récupération des données depuis Room lors de l'arrivée
+		viewModelFactory = ReportEditViewModelFactory(requireContext())
 		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
@@ -57,7 +58,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		super.onActivityCreated(savedInstanceState)
 
 		measure_recyclerview.layoutManager = LinearLayoutManager(activity)
-		measure_recyclerview.adapter = MeasuresAdapter(viewModel.currentFamily.value!!._measures,this)
+		measure_recyclerview.adapter = MeasuresAdapter(viewModel.currentFamily.value!!.measures,this)
 
 		family_spinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,viewModel.familiesToString())
 
@@ -69,7 +70,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		}
 
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
-			//TODO quand on change ou édite la mesure active
 			updateMeasures(newFamily)
 			updateFamilyName(newFamily.name)
 		})

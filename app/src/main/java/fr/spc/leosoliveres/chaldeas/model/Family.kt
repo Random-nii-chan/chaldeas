@@ -8,30 +8,30 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-@Entity
-data class Family(
-	@PrimaryKey(autoGenerate = true) val uid:Int=0,
-	@ColumnInfo(name="Name") val _name:String,
-	@Ignore var _measures:ArrayList<Measure>
-) : BaseObservable() {
+@Entity(tableName = "families")
+data class Family(private val _name:String) : BaseObservable() {
+
+	//var et non private parce que Room ne fonctionne pas
+	@PrimaryKey(autoGenerate = true) var familyId:Int = 0
 
 	@Bindable
-	var measures : ArrayList<Measure> = _measures
-	set(value) {
-		field=value
-		notifyPropertyChanged(BR.measures)
-	}
-
-	@Bindable
-	var name : String = _name
+	@ColumnInfo(name="Name") var name : String = _name
 	set(value) {
 		field = value
 		notifyPropertyChanged(BR.name)
 	}
 
-	constructor(_name:String):this(0,_name,ArrayList<Measure>())
+	@Bindable
+	@Ignore var measures : ArrayList<Measure> = ArrayList<Measure>()
+	set(value) {
+		field=value
+		notifyPropertyChanged(BR.measures)
+	}
 
-	constructor(_name:String,_data:ArrayList<Measure>):this(0,_name,_data)
+	constructor(_name:String, _measures:ArrayList<Measure>) : this(_name) {
+		name = _name
+		measures = _measures
+	}//:this(0,_name,ArrayList<Measure>())
 
 	fun removeMeasure(i:Int) {
 		val tempList = measures

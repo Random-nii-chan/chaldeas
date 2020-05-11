@@ -1,13 +1,17 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
+import fr.spc.leosoliveres.chaldeas.model.database.AppDatabase
 
-class ReportEditViewModel() : ViewModel() {
+class ReportEditViewModel(ctx: Context) : ViewModel() {
 
 	private var _familyList = MutableLiveData<ArrayList<Family>>()
 	val familyList : LiveData<ArrayList<Family>>
@@ -18,6 +22,9 @@ class ReportEditViewModel() : ViewModel() {
 	private var _currentFamily = PropertyAwareMutableLiveData<Family>()
 	val currentFamily : LiveData<Family>
 		get() = _currentFamily
+
+	private val db:AppDatabase =
+		Room.databaseBuilder(ctx,AppDatabase::class.java,"chaldeas-database").build()
 
 	init {
 		_familyList.value = initFamilies()

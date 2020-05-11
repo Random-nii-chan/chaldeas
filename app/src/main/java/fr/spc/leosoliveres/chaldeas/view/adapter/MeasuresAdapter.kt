@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +21,7 @@ import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
 class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
 
-	private var viewModelFactory: ReportEditViewModelFactory = ReportEditViewModelFactory()
+	private var viewModelFactory: ReportEditViewModelFactory = ReportEditViewModelFactory(context.requireContext())
 	private var viewModel:ReportEditViewModel = ViewModelProviders.of(this.context,viewModelFactory).get(ReportEditViewModel::class.java)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -87,7 +85,6 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val con
 	}
 
 	private fun autofill(mainView:View, measure:Measure){
-		//trouver les vues-enfants et les remplir des données de la mesure
 		mainView.findViewById<EditText>(R.id.measure_name).setText(measure.name)
 		mainView.findViewById<EditText>(R.id.unit_full).setText(measure.unitFull)
 		mainView.findViewById<EditText>(R.id.unit_abriged).setText(measure.unitAbriged)
