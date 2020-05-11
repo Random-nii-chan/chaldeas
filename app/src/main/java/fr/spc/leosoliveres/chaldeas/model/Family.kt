@@ -31,7 +31,7 @@ data class Family(private val _name:String) : BaseObservable() {
 	constructor(_name:String, _measures:ArrayList<Measure>) : this(_name) {
 		name = _name
 		measures = _measures
-	}//:this(0,_name,ArrayList<Measure>())
+	}
 
 	fun removeMeasure(i:Int) {
 		val tempList = measures
