@@ -14,20 +14,4 @@ abstract class AppDatabase : RoomDatabase() {
 	//TODO objet base de données
 	abstract fun measureDao(): MeasureDao
 	abstract fun familyDao(): FamilyDao
-
-	private var instance : AppDatabase?=null
-
-	fun getInstance(context: Context): AppDatabase? {
-		if (instance == null) {
-			synchronized(AppDatabase::class) {
-				instance = Room.databaseBuilder(
-					context.applicationContext,
-					AppDatabase::class.java, "notes_database"
-				)
-					.fallbackToDestructiveMigration()
-					.addCallback(roomCallback)
-					.build()
-			}
-		}
-		return instance
 }
