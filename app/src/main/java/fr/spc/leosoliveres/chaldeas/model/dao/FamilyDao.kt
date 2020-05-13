@@ -1,16 +1,28 @@
 package fr.spc.leosoliveres.chaldeas.model.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import fr.spc.leosoliveres.chaldeas.model.FamilyWithMeasures
 import fr.spc.leosoliveres.chaldeas.model.Family
 
 @Dao
 interface FamilyDao {
-	//TODO méthode de sauvegarde Famille
+	//Create
 	@Insert
 	fun insert(f: Family)
-	//TODO méthode de chargement Famille
+
+	//Read
 	@Query("SELECT * FROM families")
 	fun getFamilies():List<Family>
+
+	@Transaction
+	@Query("SELECT * FROM families")
+	fun getFamiliesWithMeasures():List<FamilyWithMeasures>
+
+	//Update
+	@Update
+	fun update(f:Family)
+
+	//Delete
+	@Query("DELETE FROM families")
+	fun deleteAll()
 }

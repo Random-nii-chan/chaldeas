@@ -4,12 +4,9 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
-import fr.spc.leosoliveres.chaldeas.model.database.AppDatabase
 
 class ReportEditViewModel(ctx: Context) : ViewModel() {
 
@@ -22,9 +19,6 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 	private var _currentFamily = PropertyAwareMutableLiveData<Family>()
 	val currentFamily : LiveData<Family>
 		get() = _currentFamily
-
-	private val db:AppDatabase =
-		Room.databaseBuilder(ctx,AppDatabase::class.java,"chaldeas-database").build()
 
 	init {
 		_familyList.value = initFamilies()
@@ -59,15 +53,11 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 	}
 
 	fun duplicateMeasure(m:Measure) {
-		val tempList = _currentFamily.value?.measures
-		tempList?.add(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
-		_currentFamily.value!!.measures = tempList!!
+		_currentFamily.value!!.addMeasure(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
 	}
 
 	fun addMeasure(m:Measure) {
-		val tempList = _currentFamily.value!!.measures
-		tempList.add(m)
-		_currentFamily.value!!.measures = tempList
+		_currentFamily.value!!.addMeasure(m)
 	}
 
 	//Méthodes CRUD Familles

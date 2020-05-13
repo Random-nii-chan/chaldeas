@@ -27,7 +27,6 @@ class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListen
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		// TODO: Use the ViewModel
 		siteRecyclerView.layoutManager = LinearLayoutManager(activity)
 		siteRecyclerView.adapter = SitesAdapter(initVariables(20),this)
 	}
