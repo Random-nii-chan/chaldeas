@@ -1,4 +1,4 @@
-package fr.spc.leosoliveres.chaldeas.model
+package fr.spc.leosoliveres.chaldeas.model.entity
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Observable

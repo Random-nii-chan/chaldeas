@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import fr.spc.leosoliveres.chaldeas.R
-import fr.spc.leosoliveres.chaldeas.model.Site
+import fr.spc.leosoliveres.chaldeas.model.entity.Site
 import kotlinx.android.synthetic.main.fragment_site_detail.*
 
 class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {

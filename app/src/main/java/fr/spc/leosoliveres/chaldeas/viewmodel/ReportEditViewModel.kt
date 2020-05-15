@@ -4,9 +4,14 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.spc.leosoliveres.chaldeas.model.Family
-import fr.spc.leosoliveres.chaldeas.model.Measure
-import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
+import androidx.lifecycle.viewModelScope
+import fr.spc.leosoliveres.chaldeas.model.entity.Family
+import fr.spc.leosoliveres.chaldeas.model.entity.Measure
+import fr.spc.leosoliveres.chaldeas.model.entity.PropertyAwareMutableLiveData
+import fr.spc.leosoliveres.chaldeas.model.dao.FamilyDao
+import fr.spc.leosoliveres.chaldeas.model.dao.MeasureDao
+import fr.spc.leosoliveres.chaldeas.model.database.AppDatabase
+import fr.spc.leosoliveres.chaldeas.model.repository.AppRepo
 
 class ReportEditViewModel(ctx: Context) : ViewModel() {
 
@@ -16,12 +21,20 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 
 	private var currentFamilyIndex : Int = 0
 
-	private var _currentFamily = PropertyAwareMutableLiveData<Family>()
+	private var _currentFamily =
+		PropertyAwareMutableLiveData<Family>()
 	val currentFamily : LiveData<Family>
 		get() = _currentFamily
 
+	private val repository: AppRepo
+
 	init {
-		_familyList.value = initFamilies()
+		val fDao:FamilyDao = AppDatabase.getDatabase(ctx,viewModelScope).familyDao()
+		val mDao: MeasureDao = AppDatabase.getDatabase(ctx,viewModelScope).measureDao()
+		repository = AppRepo(fDao,mDao)
+		_familyList = repository.families
+
+		//_familyList.value = initFamilies()
 		_currentFamily.value = _familyList.value!![currentFamilyIndex]
 	}
 
@@ -40,7 +53,7 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 	}
 
 	//Méthodes CRUD mesures
-	fun editMeasure(m:Measure,newData:Measure) {
+	fun editMeasure(m: Measure, newData: Measure) {
 		val tempList = _currentFamily.value?.measures
 		val index = tempList?.indexOf(m)
 		if (index != null) tempList[index] = newData
@@ -48,15 +61,21 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		_currentFamily.value!!.measures = tempList!!
 	}
 
-	fun deleteMeasure(m:Measure) {
+	fun deleteMeasure(m: Measure) {
 		_currentFamily.value!!.removeMeasure(_currentFamily.value!!.getIndex(m))
 	}
 
-	fun duplicateMeasure(m:Measure) {
-		_currentFamily.value!!.addMeasure(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
+	fun duplicateMeasure(m: Measure) {
+		_currentFamily.value!!.addMeasure(
+			Measure(
+				"Copie de ${m.name}",
+				m.unitFull,
+				m.unitAbriged
+			)
+		)
 	}
 
-	fun addMeasure(m:Measure) {
+	fun addMeasure(m: Measure) {
 		_currentFamily.value!!.addMeasure(m)
 	}
 
@@ -65,30 +84,45 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		_currentFamily.value!!.name = n
 	}
 
-	fun addFamily(f:Family) {
+	fun addFamily(f: Family) {
 		val tempList = _familyList.value
 		tempList!!.add(f)
 		_familyList.value = tempList
 		currentFamilyIndex = _familyList.value!!.size-1
 	}
 
-	fun deleteFamily(f:Family) {
+	fun deleteFamily(f: Family) {
 		val tempList = _familyList.value
 		tempList!!.remove(f)
 		_familyList.value = tempList
 		currentFamilyIndex--
 	}
 
+	fun saveEverything() {
+
+	}
+
 	//initialisations
 	private fun initFamilies(count:Int=3):ArrayList<Family> {
 		val families = ArrayList<Family>()
-		for(i in 0..count) families.add(Family("Famille n°$i",initMeasures()))
+		for(i in 0..count) families.add(
+			Family(
+				"Famille n°$i",
+				initMeasures()
+			)
+		)
 		return families
 	}
 
 	private fun initMeasures(count:Int=5):ArrayList<Measure>{
 		val arrayList = ArrayList<Measure>()
-		for(i in 0..count) arrayList.add(Measure("Mesure n°$i", "Unité $i", "U$i"))
+		for(i in 0..count) arrayList.add(
+			Measure(
+				"Mesure n°$i",
+				"Unité $i",
+				"U$i"
+			)
+		)
 		return arrayList
 	}
 }

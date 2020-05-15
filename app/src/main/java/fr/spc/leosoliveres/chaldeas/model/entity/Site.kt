@@ -1,7 +1,6 @@
-package fr.spc.leosoliveres.chaldeas.model
+package fr.spc.leosoliveres.chaldeas.model.entity
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
@@ -18,16 +17,6 @@ data class Site(
     val owner: String = "Propriétaire non renseigné",
     val type: String= "Type d'installation inconnu"
 ) : Parcelable {
-
-    constructor(
-        _name:String,
-        _latitude:Float,
-        _longitude:Float,
-        _powerSource:String,
-        _access:String,
-        _owner:String,
-        _type:String
-    ): this(0,_name,_latitude,_longitude,_powerSource,_access,_owner,_type)
 
     constructor(_name:String,_latitude: Float,_longitude: Float):this(
         0,

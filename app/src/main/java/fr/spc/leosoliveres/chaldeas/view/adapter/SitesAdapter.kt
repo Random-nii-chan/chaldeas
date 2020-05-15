@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
-import fr.spc.leosoliveres.chaldeas.model.Site
+import fr.spc.leosoliveres.chaldeas.model.entity.Site
 
 class SitesAdapter(private val sites: ArrayList<Site>, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

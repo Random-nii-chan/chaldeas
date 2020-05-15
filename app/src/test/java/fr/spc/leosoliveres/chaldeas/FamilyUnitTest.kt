@@ -1,10 +1,9 @@
 package fr.spc.leosoliveres.chaldeas
 
-import fr.spc.leosoliveres.chaldeas.model.Family
-import fr.spc.leosoliveres.chaldeas.model.Measure
+import fr.spc.leosoliveres.chaldeas.model.entity.Family
+import fr.spc.leosoliveres.chaldeas.model.entity.Measure
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Before
 
 class FamilyUnitTest {

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.view.adapter.OnItemClickListener
 import fr.spc.leosoliveres.chaldeas.view.adapter.SitesAdapter
-import fr.spc.leosoliveres.chaldeas.model.Site
+import fr.spc.leosoliveres.chaldeas.model.entity.Site
 import kotlinx.android.synthetic.main.fragment_site_list.*
 
 class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListener {
@@ -31,14 +31,20 @@ class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListen
 		siteRecyclerView.adapter = SitesAdapter(initVariables(20),this)
 	}
 
-	override fun onItemClicked(site:Site){
+	override fun onItemClicked(site: Site){
 		findNavController().navigate(R.id.action_siteListFragment_siteDetailFragment,bundleOf("site" to site))
 	}
 
 	private fun initVariables(count:Int):ArrayList<Site>{
 		val sites : ArrayList<Site> = ArrayList()
 
-		sites.add(Site("Nom de relais qui est bien trop long pour rentrer sur une ligne",-5.45457856f,3.89164832f))
+		sites.add(
+			Site(
+				"Nom de relais qui est bien trop long pour rentrer sur une ligne",
+				-5.45457856f,
+				3.89164832f
+			)
+		)
 
 		for (i in 0..count){
 			sites.add(
