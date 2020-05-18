@@ -98,10 +98,6 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		currentFamilyIndex--
 	}
 
-	fun saveEverything() {
-
-	}
-
 	//initialisations
 	private fun initFamilies(count:Int=3):ArrayList<Family> {
 		val families = ArrayList<Family>()
