@@ -7,7 +7,7 @@ import fr.spc.leosoliveres.chaldeas.model.entity.Measure
 interface MeasureDao {
 	//Create
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun insertOne(m: Measure)
+	suspend fun insert(m: Measure)
 
 	//Read
 	@Query("SELECT * FROM measures")
@@ -18,9 +18,12 @@ interface MeasureDao {
 
 	//Update
 	@Update
-	fun update(m: Measure)
+	suspend fun update(m: Measure)
 
 	//Delete
 	@Query("DELETE FROM measures")
 	suspend fun deleteAll()
+
+	@Query("DELETE FROM measures WHERE measureId = :id")
+	suspend fun delete(id:Long)
 }

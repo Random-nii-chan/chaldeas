@@ -71,7 +71,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 		viewModel.familyList.observe(viewLifecycleOwner, Observer { newFamilylist ->
 			val strings=ArrayList<String>()
-			if(newFamilylist.size==0) {
+			if(newFamilylist.isEmpty()) {
 				strings.add(resources.getString(R.string.no_families))
 				//Log.i("array",defaults.toString())
 				family_name_bar.visibility = View.INVISIBLE
@@ -149,7 +149,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		dialogView.setHint(R.string.hint_family_name)
 		builder.setTitle(R.string.rename).apply{
 			setPositiveButton(R.string.rename) { _: DialogInterface, _: Int ->
-				viewModel.renameFamily(dialogView.text.toString())
+				viewModel.updateFamilyName()
 				updateFamilyList(viewModel.familiesToString())
 			}
 			setNegativeButton(R.string.cancel) { dialog: DialogInterface, _:Int ->

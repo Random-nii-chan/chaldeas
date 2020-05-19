@@ -74,7 +74,7 @@ class ReportEditViewModelTest {
 
 	@Test
 	fun testRenameFamily() {
-		vm.renameFamily("test")
+		vm.updateFamilyName("test")
 		assertThat(vm.currentFamily.value!!.name).isEqualTo("test")
 	}
 

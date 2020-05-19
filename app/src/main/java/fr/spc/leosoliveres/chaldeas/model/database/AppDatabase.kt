@@ -14,7 +14,6 @@ import kotlinx.coroutines.CoroutineScope
 abstract class AppDatabase:RoomDatabase() {
 	abstract fun familyDao(): FamilyDao
 	abstract fun measureDao(): MeasureDao
-
 	companion object {
 		//defining a singleton
 		@Volatile
@@ -35,7 +34,7 @@ abstract class AppDatabase:RoomDatabase() {
 				val instance = Room.databaseBuilder(
 					context.applicationContext,
 					AppDatabase::class.java,
-					"word_database"
+					"app_database"
 				).build() //build AFTER adding callback
 				INSTANCE = instance
 				return instance

@@ -1,5 +1,7 @@
 package fr.spc.leosoliveres.chaldeas.model.dao
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import fr.spc.leosoliveres.chaldeas.model.entity.Family
 
@@ -7,17 +9,20 @@ import fr.spc.leosoliveres.chaldeas.model.entity.Family
 interface FamilyDao {
 	//Create
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun insertOne(f: Family)
+	suspend fun insertOne(f: Family)
 
 	//Read
 	@Query("SELECT * FROM families")
-	fun getFamilies():List<Family>
+	fun getFamilies():LiveData<List<Family>>
 
 	//Update
 	@Update
-	fun update(f: Family)
+	suspend fun update(f: Family)
 
 	//Delete
 	@Query("DELETE FROM families")
-	fun deleteAll()
+	suspend fun deleteAll()
+
+	@Query("DELETE FROM families WHERE familyId=:id")
+	suspend fun deleteOne(id:Long)
 }

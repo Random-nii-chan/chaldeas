@@ -1,8 +1,8 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.spc.leosoliveres.chaldeas.model.entity.Family
@@ -12,61 +12,66 @@ import fr.spc.leosoliveres.chaldeas.model.dao.FamilyDao
 import fr.spc.leosoliveres.chaldeas.model.dao.MeasureDao
 import fr.spc.leosoliveres.chaldeas.model.database.AppDatabase
 import fr.spc.leosoliveres.chaldeas.model.repository.AppRepo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ReportEditViewModel(ctx: Context) : ViewModel() {
 
-	private var _familyList = MutableLiveData<ArrayList<Family>>()
-	val familyList : LiveData<ArrayList<Family>>
-		get() = _familyList
+	var familyList : LiveData<List<Family>>
+
+	var currentFamily = PropertyAwareMutableLiveData<Family>()
 
 	private var currentFamilyIndex : Int = 0
 
-	private var _currentFamily =
-		PropertyAwareMutableLiveData<Family>()
-	val currentFamily : LiveData<Family>
-		get() = _currentFamily
-
 	private val repository: AppRepo
 
-	init {
-		val fDao:FamilyDao = AppDatabase.getDatabase(ctx,viewModelScope).familyDao()
-		val mDao: MeasureDao = AppDatabase.getDatabase(ctx,viewModelScope).measureDao()
-		repository = AppRepo(fDao,mDao)
-		_familyList = repository.families
+	private val fDao:FamilyDao = AppDatabase.getDatabase(ctx,viewModelScope).familyDao()
+	private val mDao: MeasureDao = AppDatabase.getDatabase(ctx,viewModelScope).measureDao()
 
+	init {
+		repository = AppRepo(fDao)
+		familyList = repository.families
 		//_familyList.value = initFamilies()
-		_currentFamily.value = _familyList.value!![currentFamilyIndex]
+		Log.i("value",familyList.value.toString())
+		if(familyList.value!!.isNullOrEmpty()) currentFamily.value = Family("")
+		else currentFamily.value = familyList.value!![currentFamilyIndex]
 	}
 
 	fun getFamilyIndex():Int = currentFamilyIndex
 
 	fun changeFamily(i:Int) {
-		val maxValue = _familyList.value!!.size -1
-		currentFamilyIndex = if(i in 0..maxValue) i else maxValue
-		_currentFamily.value = _familyList.value!![currentFamilyIndex]
+		if(familyList.value!!.isNotEmpty()) {
+			val maxValue = (familyList.value!!.size-1)
+			currentFamilyIndex = if (i in 0..maxValue) i else maxValue
+			currentFamily.value = familyList.value!![currentFamilyIndex]
+		}
+		else {
+			currentFamilyIndex = 0
+			currentFamily.value = Family("")
+		}
 	}
 
 	fun familiesToString():ArrayList<String> {
 		val al = ArrayList<String>()
-		for(i in 0 until _familyList.value!!.size) al.add(_familyList.value!![i].toString())
+		for(element in familyList.value!!) al.add(element.toString())
 		return al
 	}
 
 	//Méthodes CRUD mesures
 	fun editMeasure(m: Measure, newData: Measure) {
-		val tempList = _currentFamily.value?.measures
+		val tempList = currentFamily.value?.measures
 		val index = tempList?.indexOf(m)
 		if (index != null) tempList[index] = newData
 		//besoin d'assigner une valeur pour déclencher l'évènement d'observations
-		_currentFamily.value!!.measures = tempList!!
+		currentFamily.value!!.measures = tempList!!
 	}
 
-	fun deleteMeasure(m: Measure) {
-		_currentFamily.value!!.removeMeasure(_currentFamily.value!!.getIndex(m))
+	fun deleteMeasure(m: Measure) = viewModelScope.launch(Dispatchers.IO) {
+		mDao.delete(m.measureId)
 	}
 
-	fun duplicateMeasure(m: Measure) {
-		_currentFamily.value!!.addMeasure(
+	fun duplicateMeasure(m: Measure) = viewModelScope.launch(Dispatchers.IO) {
+		mDao.insert(
 			Measure(
 				"Copie de ${m.name}",
 				m.unitFull,
@@ -75,27 +80,34 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		)
 	}
 
-	fun addMeasure(m: Measure) {
-		_currentFamily.value!!.addMeasure(m)
+	fun addMeasure(m: Measure) = viewModelScope.launch(Dispatchers.IO){
+		mDao.insert(m)
 	}
 
 	//Méthodes CRUD Familles
-	fun renameFamily(n:String) {
-		_currentFamily.value!!.name = n
+	fun updateFamilyName() = viewModelScope.launch(Dispatchers.IO) {
+		fDao.update(currentFamily.value!!)
+		//currentFamily.value!!.name = n
 	}
 
-	fun addFamily(f: Family) {
-		val tempList = _familyList.value
+	fun addFamily(f: Family) = viewModelScope.launch(Dispatchers.IO) {
+		fDao.insertOne(f)
+		/*
+		val tempList = familyList.value
 		tempList!!.add(f)
-		_familyList.value = tempList
-		currentFamilyIndex = _familyList.value!!.size-1
+		familyList.value = tempList
+		currentFamilyIndex = familyList.value!!.size-1
+		 */
 	}
 
-	fun deleteFamily(f: Family) {
-		val tempList = _familyList.value
+	fun deleteFamily(f: Family) = viewModelScope.launch(Dispatchers.IO) {
+		fDao.deleteOne(f.familyId)
+		/*
+		val tempList = familyList.value
 		tempList!!.remove(f)
-		_familyList.value = tempList
+		familyList.value = tempList
 		currentFamilyIndex--
+		*/
 	}
 
 	//initialisations

@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.spc.leosoliveres.chaldeas.model.entity.Family
 import fr.spc.leosoliveres.chaldeas.model.dao.FamilyDao
-import fr.spc.leosoliveres.chaldeas.model.dao.MeasureDao
-import fr.spc.leosoliveres.chaldeas.model.entity.Measure
 
-class AppRepo constructor(
-	private val localF:FamilyDao,
-	private val localM:MeasureDao
+class AppRepo(
+	localF: FamilyDao
 ){
-	val families:MutableLiveData<ArrayList<Family>> = getFilledFamilies()
+	private val res = localF.getFamilies()
+	private val al = ArrayList<Family>()
+	val families: LiveData<List<Family>> = if(res.value == null) MutableLiveData(al) else res
 
-	private fun getFilledFamilies() : MutableLiveData<ArrayList<Family>> {
+	/*
+	suspend fun getFilledFamilies() : LiveData<List<Family>> {
 		val al = ArrayList<Family>()
 		val families = localF.getFamilies()
 		var measures:ArrayList<Measure>
@@ -25,4 +25,5 @@ class AppRepo constructor(
 
 		return MutableLiveData(al)
 	}
+	 */
 }
