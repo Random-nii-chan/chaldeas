@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import fr.spc.leosoliveres.chaldeas.model.entity.Measure
+import fr.spc.leosoliveres.chaldeas.model.Measure
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,13 +30,7 @@ class ReportEditViewModelTest {
 		//copy the values
 		val initialSize = vm.currentFamily.value!!.size()
 		//adding in the measures
-		vm.addMeasure(
-			Measure(
-				"test",
-				"test",
-				"t"
-			)
-		)
+		vm.addMeasure(Measure("test","test","t"))
 		val newSize = vm.currentFamily.value!!.size()
 		//check if
 		assertThat(newSize).isEqualTo(initialSize+1)
@@ -63,18 +57,14 @@ class ReportEditViewModelTest {
 	fun testEditMeasure() {
 		//editing
 		val oldMeasure = vm.currentFamily.value!!.measures[0]
-		val newMeasure = Measure(
-			"YES",
-			"YES",
-			"YES"
-		)
+		val newMeasure = Measure("YES","YES","YES")
 		vm.editMeasure(oldMeasure,newMeasure)
 		assertThat(vm.currentFamily.value!!.measures[0]).isEqualTo(newMeasure)
 	}
 
 	@Test
 	fun testRenameFamily() {
-		vm.updateFamilyName("test")
+		vm.renameFamily("test")
 		assertThat(vm.currentFamily.value!!.name).isEqualTo("test")
 	}
 

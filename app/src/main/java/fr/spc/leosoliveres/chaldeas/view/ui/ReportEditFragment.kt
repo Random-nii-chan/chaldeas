@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.chaldeas.R
-import fr.spc.leosoliveres.chaldeas.model.entity.Family
-import fr.spc.leosoliveres.chaldeas.model.entity.Measure
+import fr.spc.leosoliveres.chaldeas.model.Family
+import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.view.adapter.MeasuresAdapter
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
@@ -48,6 +48,11 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		}
 	}
 
+	override fun onStop() {
+		//TODO: sauvegarde dans la base Room sur onStop()
+		super.onStop()
+	}
+
 	@SuppressLint("ResourceType")
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
@@ -71,7 +76,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 		viewModel.familyList.observe(viewLifecycleOwner, Observer { newFamilylist ->
 			val strings=ArrayList<String>()
-			if(newFamilylist.isEmpty()) {
+			if(newFamilylist.size==0) {
 				strings.add(resources.getString(R.string.no_families))
 				//Log.i("array",defaults.toString())
 				family_name_bar.visibility = View.INVISIBLE
@@ -101,7 +106,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		}
 	}
 
-	private fun updateMeasures(newFamily: Family) {
+	private fun updateMeasures(newFamily:Family) {
 		measure_recyclerview.swapAdapter(MeasuresAdapter(newFamily.measures,this),true)
 	}
 
@@ -127,11 +132,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 				val newUnit = dialogView.unit_full.text.toString()
 				val newAbrigedUnit = dialogView.unit_abriged.text.toString()
 
-				val newData = Measure(
-					newName,
-					newUnit,
-					newAbrigedUnit
-				)
+				val newData = Measure(newName,newUnit,newAbrigedUnit)
 				viewModel.addMeasure(newData)
 			}
 			setNegativeButton(R.string.cancel) { dialog: DialogInterface, _:Int ->
@@ -149,7 +150,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		dialogView.setHint(R.string.hint_family_name)
 		builder.setTitle(R.string.rename).apply{
 			setPositiveButton(R.string.rename) { _: DialogInterface, _: Int ->
-				viewModel.updateFamilyName()
+				viewModel.renameFamily(dialogView.text.toString())
 				updateFamilyList(viewModel.familiesToString())
 			}
 			setNegativeButton(R.string.cancel) { dialog: DialogInterface, _:Int ->
@@ -167,11 +168,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		builder.setTitle(R.string.add_family).apply{
 			setPositiveButton(R.string.add) { _: DialogInterface, _: Int ->
 				val title = dialogView.text.toString()
-				viewModel.addFamily(
-					Family(
-						if (title.isEmpty() || title.isBlank()) "Nouvelle famille" else title
-					)
-				)
+				viewModel.addFamily(Family(if(title.isEmpty() || title.isBlank()) "Nouvelle famille" else title))
 				updateFamilyList(viewModel.familiesToString())
 			}
 			setNegativeButton(R.string.cancel) { dialog: DialogInterface, _:Int ->
@@ -181,7 +178,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		builder.show()
 	}
 
-	private fun showFamilyDeleteDialog(ctx:Context?,f: Family) {
+	private fun showFamilyDeleteDialog(ctx:Context?,f:Family) {
 		val builder = AlertDialog.Builder(ctx)
 		builder.setTitle(R.string.delete_family).apply{
 			setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->

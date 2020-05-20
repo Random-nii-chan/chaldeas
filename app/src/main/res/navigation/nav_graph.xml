@@ -18,7 +18,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim">
             <argument
                 android:name="site"
-                app:argType="fr.spc.leosoliveres.chaldeas.model.entity.Site" />
+                app:argType="fr.spc.leosoliveres.chaldeas.model.Site" />
         </action>
     </fragment>
     <fragment

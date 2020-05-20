@@ -1,4 +1,4 @@
-package fr.spc.leosoliveres.chaldeas.model.entity
+package fr.spc.leosoliveres.chaldeas.model
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
 data class Family(private val _name:String) : BaseObservable() {
 
 	//var et non private parce que Room ne fonctionne pas
-	@PrimaryKey(autoGenerate = true) var familyId:Long = 0
+	@PrimaryKey(autoGenerate = true) var familyId:Int = 0
 
 	@Bindable
 	@ColumnInfo(name="Name") var name : String = _name
@@ -22,8 +22,7 @@ data class Family(private val _name:String) : BaseObservable() {
 	}
 
 	@Bindable
-	@Ignore
-	var measures : ArrayList<Measure> = ArrayList()
+	@Ignore var measures : ArrayList<Measure> = ArrayList<Measure>()
 	set(value) {
 		field=value
 		notifyPropertyChanged(BR.measures)
@@ -32,7 +31,7 @@ data class Family(private val _name:String) : BaseObservable() {
 	constructor(_name:String, _measures:ArrayList<Measure>) : this(_name) {
 		name = _name
 		measures = _measures
-	}
+	}//:this(0,_name,ArrayList<Measure>())
 
 	fun removeMeasure(i:Int) {
 		val tempList = measures
@@ -40,14 +39,7 @@ data class Family(private val _name:String) : BaseObservable() {
 		measures = tempList
 	}
 
-	fun addMeasure(m: Measure) {
-		val tempList = measures
-		m.setParentId(this.familyId)
-		tempList.add(m)
-		measures = tempList
-	}
-
-	fun getIndex(m: Measure):Int {
+	fun getIndex(m:Measure):Int {
 		return if(measures.contains(m))
 			measures.indexOf(m)
 		else

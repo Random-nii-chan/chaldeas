@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
-import fr.spc.leosoliveres.chaldeas.model.entity.Measure
+import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
@@ -46,7 +46,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val con
 	}
 
 	@SuppressLint("InflateParams")
-	private fun showAlertEdit(ctx: Context,m: Measure){
+	private fun showAlertEdit(ctx: Context,m:Measure){
 		val builder = AlertDialog.Builder(ctx)
 		val inflater = LayoutInflater.from(ctx)
 		val dialogView = inflater.inflate(R.layout.dialog_measure_edit,null)
@@ -59,8 +59,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val con
 				val newData = Measure(
 					dialogView.measure_name.text.toString(),
 					dialogView.unit_full.text.toString(),
-					dialogView.unit_abriged.text.toString()
-				)
+					dialogView.unit_abriged.text.toString())
 				viewModel.editMeasure(m,newData)
 			}
 			setNegativeButton(R.string.cancel) { dialog:DialogInterface, _:Int ->
@@ -71,7 +70,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val con
 	}
 
 	@SuppressLint("InflateParams")
-	private fun showAlertDelete(ctx:Context, m: Measure) {
+	private fun showAlertDelete(ctx:Context, m:Measure) {
 		val builder = AlertDialog.Builder(ctx)
 
 		builder.setTitle(R.string.delete_measure).apply{
@@ -85,7 +84,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val con
 		builder.show()
 	}
 
-	private fun autofill(mainView:View, measure: Measure){
+	private fun autofill(mainView:View, measure:Measure){
 		mainView.findViewById<EditText>(R.id.measure_name).setText(measure.name)
 		mainView.findViewById<EditText>(R.id.unit_full).setText(measure.unitFull)
 		mainView.findViewById<EditText>(R.id.unit_abriged).setText(measure.unitAbriged)
