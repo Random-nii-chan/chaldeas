@@ -6,6 +6,7 @@
     <string name="yes">Oui</string>
     <string name="rename">Renommer</string>
     <string name="add">Ajouter</string>
+    <string name="submit">Sauvegarder préférences</string>
 
 
     <!--Annulations-->
@@ -24,6 +25,7 @@
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
     <string name="duplicate">Dupliquer</string>
+    <string name="saved_preferences">Préférences sauvegardées</string>
 
     <!--Menus-->
     <string name="settings">Paramètres</string>
@@ -35,11 +37,4 @@
     <string name="hint_family_name">Nom de la famille</string>
     <string name="hint_measure_unit">Unité</string>
     <string name="hint_measure_abriged">Unité abrégée</string>
-
-    <string name="choose_family">Choisir une catégorie</string>
-    <string-array name="values_family">
-        <item>Faisceau 1</item>
-        <item>Faisceau 2</item>
-        <item>Radio</item>
-    </string-array>
 </resources>

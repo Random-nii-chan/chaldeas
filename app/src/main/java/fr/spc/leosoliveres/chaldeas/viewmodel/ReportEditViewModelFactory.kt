@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 
-class ReportEditViewModelFactory(_ctx: Context): ViewModelProvider.Factory{
+class ReportEditViewModelFactory(ctx: Context) : ViewModelProvider.Factory{
 
-	private val ctx = _ctx
+	private val context = ctx
 
 	@Suppress("UNCHECKED_CAST")
 	override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 		if (modelClass.isAssignableFrom(ReportEditViewModel::class.java)) {
-			return ReportEditViewModel(ctx) as T
+			return ReportEditViewModel(context) as T
 		}
 		throw IllegalArgumentException("Unknown viewmodel class")
 	}

@@ -1,17 +1,23 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.model.PropertyAwareMutableLiveData
-import fr.spc.leosoliveres.chaldeas.model.database.AppDatabase
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.*
 
 class ReportEditViewModel(ctx: Context) : ViewModel() {
+
+	companion object {
+		const val PREFS_FILENAME = "prefs.json"
+	}
 
 	private var _familyList = MutableLiveData<ArrayList<Family>>()
 	val familyList : LiveData<ArrayList<Family>>
@@ -24,7 +30,7 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		get() = _currentFamily
 
 	init {
-		_familyList.value = initFamilies()
+		_familyList.value = initFamilies(ctx)
 		_currentFamily.value = _familyList.value!![currentFamilyIndex]
 	}
 
@@ -40,6 +46,53 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		val al = ArrayList<String>()
 		for(i in 0 until _familyList.value!!.size) al.add(_familyList.value!![i].toString())
 		return al
+	}
+
+	fun saveJson(ctx:Context) {
+		//TODO paramétrer sortie
+		val jsonString:String
+		jsonString = if(_familyList.value!!.size == 0) {
+			JSONObject().toString()
+		} else {
+			val json = JSONObject()
+			val array = JSONArray()
+			for(f in _familyList.value!!) {
+				array.put(encodeFamily(f))
+			}
+			json.put("families",array)
+
+			json.toString()
+		}
+
+		val fos: FileOutputStream? = ctx.applicationContext.openFileOutput(PREFS_FILENAME,MODE_PRIVATE)
+		fos?.write(jsonString.toByteArray())
+		Toast.makeText(ctx,"Modèle de rapport sauvegardé sur ${ctx.filesDir}/${PREFS_FILENAME}",Toast.LENGTH_LONG).show()
+		fos?.close()
+	}
+
+	private fun loadJson(ctx: Context):JSONObject {
+		//TODO paramétrer chargement
+		val file = File(ctx.filesDir, PREFS_FILENAME)
+		return JSONObject(file.readText())
+	}
+
+	private fun encodeMeasure(m:Measure):JSONObject {
+		val json = JSONObject()
+		json.put("name",m.name)
+		json.put("unitFull",m.unitFull)
+		json.put("unitAbriged",m.unitAbriged)
+		return json
+	}
+
+	private fun encodeFamily(f:Family):JSONObject {
+		val json = JSONObject()
+		json.put("name",f.name)
+		val array = JSONArray()
+		for(m in f.measures) {
+			array.put(encodeMeasure(m))
+		}
+		json.put("measures",array)
+		return json
 	}
 
 	//Méthodes CRUD mesures
@@ -87,7 +140,9 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 	}
 
 	//initialisations
-	private fun initFamilies(count:Int=3):ArrayList<Family> {
+	private fun initFamilies(ctx:Context,count:Int=3):ArrayList<Family> {
+		val jsonTemplate = loadJson(ctx)
+
 		val families = ArrayList<Family>()
 		for(i in 0..count) families.add(Family("Famille n°$i",initMeasures()))
 		return families

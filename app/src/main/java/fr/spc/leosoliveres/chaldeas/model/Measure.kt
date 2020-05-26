@@ -1,17 +1,10 @@
 package fr.spc.leosoliveres.chaldeas.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName="measures")
 data class Measure(
-	@PrimaryKey (autoGenerate = true) @ColumnInfo(name="MeasureId") val measureId:Int=0,
-	@ColumnInfo (name="Name") var name:String,
-	@ColumnInfo (name="UnitFull") var unitFull:String,
-	@ColumnInfo (name="UnitAbriged") var unitAbriged:String
+	var name:String ="Nom non défini",
+	var unitFull:String ="Unité non définie",
+	var unitAbriged:String ="Indéf."
 ){
-	constructor(_name:String="Nom non défini",_unitFull:String="Unité non définie",_unitAbriged:String="Indéf."):this(0,_name,_unitFull,_unitAbriged)
 
 	init {
 		if(name.isEmpty() || name.isBlank()) name = "Nom non défini"

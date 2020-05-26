@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Family
@@ -68,6 +69,11 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 			}
 			override fun onNothingSelected(parent: AdapterView<*>?) {}
 		}
+
+		fab.setOnClickListener { view ->
+			viewModel.saveJson(requireContext())
+		}
+
 
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
 			updateMeasures(newFamily)

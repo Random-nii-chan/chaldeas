@@ -19,10 +19,10 @@ import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
-class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val context:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
+class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fragment:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
 
-	private var viewModelFactory: ReportEditViewModelFactory = ReportEditViewModelFactory(context.requireContext())
-	private var viewModel:ReportEditViewModel = ViewModelProviders.of(this.context,viewModelFactory).get(ReportEditViewModel::class.java)
+	private var viewModelFactory: ReportEditViewModelFactory = ReportEditViewModelFactory(fragment.requireContext())
+	private var viewModel:ReportEditViewModel = ViewModelProviders.of(this.fragment,viewModelFactory).get(ReportEditViewModel::class.java)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val view:View = LayoutInflater.from(parent.context).inflate(R.layout.measure_row, parent, false)

@@ -1,7 +1,6 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import fr.spc.leosoliveres.chaldeas.model.Measure
@@ -20,7 +19,7 @@ class ReportEditViewModelTest {
 
 	@Before
 	fun setupViewModel() {
-		val vmFactory = ReportEditViewModelFactory(ApplicationProvider.getApplicationContext())
+		val vmFactory = ReportEditViewModelFactory()
 		vm = vmFactory.create(ReportEditViewModel::class.java)
 	}
 

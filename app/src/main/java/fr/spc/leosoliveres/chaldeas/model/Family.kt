@@ -3,26 +3,17 @@ package fr.spc.leosoliveres.chaldeas.model
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "families")
 data class Family(private val _name:String) : BaseObservable() {
-
-	//var et non private parce que Room ne fonctionne pas
-	@PrimaryKey(autoGenerate = true) var familyId:Int = 0
-
 	@Bindable
-	@ColumnInfo(name="Name") var name : String = _name
+	var name : String = _name
 	set(value) {
 		field = value
 		notifyPropertyChanged(BR.name)
 	}
 
 	@Bindable
-	@Ignore var measures : ArrayList<Measure> = ArrayList<Measure>()
+	var measures : ArrayList<Measure> = ArrayList<Measure>()
 	set(value) {
 		field=value
 		notifyPropertyChanged(BR.measures)
