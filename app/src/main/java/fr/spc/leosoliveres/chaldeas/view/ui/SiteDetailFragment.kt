@@ -21,14 +21,12 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		val site = arguments!!.getParcelable<Site>("site")!!
-		val latitudeData = site.latitude
-		val longitudeData = site.longitude
+		val site = requireArguments().getParcelable<Site>("site")!!
 
 		name.text = site.name
 		infrastructure_type.text = site.type
-		longitude.text = String.format("Lon. : $longitudeData")
-		latitude.text = String.format("Lat. : $latitudeData")
+		longitude.text = site.lonString()
+		latitude.text = site.latString()
 		owner.text = site.owner
 		access.text = site.access
 		power_source.text = site.powerSource

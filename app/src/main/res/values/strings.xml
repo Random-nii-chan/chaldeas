@@ -25,7 +25,7 @@
     <string name="delete">Supprimer</string>
     <string name="edit">Modifier</string>
     <string name="duplicate">Dupliquer</string>
-    <string name="saved_preferences">Préférences sauvegardées</string>
+    <string name="save">Sauvegarder</string>
 
     <!--Menus-->
     <string name="settings">Paramètres</string>

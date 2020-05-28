@@ -16,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
-import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
+import fr.spc.leosoliveres.chaldeas.viewmodel.factory.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
 class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fragment:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
 
-	private var viewModelFactory: ReportEditViewModelFactory = ReportEditViewModelFactory(fragment.requireContext())
+	private var viewModelFactory: ReportEditViewModelFactory =
+		ReportEditViewModelFactory(
+			fragment.requireContext()
+		)
 	private var viewModel:ReportEditViewModel = ViewModelProviders.of(this.fragment,viewModelFactory).get(ReportEditViewModel::class.java)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

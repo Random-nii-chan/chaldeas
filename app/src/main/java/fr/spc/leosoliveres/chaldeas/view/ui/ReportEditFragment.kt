@@ -14,14 +14,13 @@ import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
 import fr.spc.leosoliveres.chaldeas.view.adapter.MeasuresAdapter
 import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
-import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModelFactory
+import fr.spc.leosoliveres.chaldeas.viewmodel.factory.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 import kotlinx.android.synthetic.main.fragment_report_edit.*
 import kotlin.collections.ArrayList
@@ -29,7 +28,7 @@ import kotlin.collections.ArrayList
 class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 	private lateinit var viewModel:ReportEditViewModel
-	private lateinit var viewModelFactory:ReportEditViewModelFactory
+	private lateinit var viewModelFactory: ReportEditViewModelFactory
 
 	companion object {
 		fun newInstance() = ReportEditFragment()
@@ -37,7 +36,10 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		//TODO : récupération des données depuis Room lors de l'arrivée
-		viewModelFactory = ReportEditViewModelFactory(requireContext())
+		viewModelFactory =
+			ReportEditViewModelFactory(
+				requireContext()
+			)
 		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
@@ -47,11 +49,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		view.findViewById<Button>(R.id.add_measure).setOnClickListener {
 			showMeasureCreationDialog(context)
 		}
-	}
-
-	override fun onStop() {
-		//TODO: sauvegarde dans la base Room sur onStop()
-		super.onStop()
 	}
 
 	@SuppressLint("ResourceType")
@@ -70,7 +67,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 			override fun onNothingSelected(parent: AdapterView<*>?) {}
 		}
 
-		fab.setOnClickListener { view ->
+		save_button.setOnClickListener { _ ->
 			viewModel.saveJson(requireContext())
 		}
 

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import fr.spc.leosoliveres.chaldeas.model.Measure
+import fr.spc.leosoliveres.chaldeas.viewmodel.factory.ReportEditViewModelFactory
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +20,8 @@ class ReportEditViewModelTest {
 
 	@Before
 	fun setupViewModel() {
-		val vmFactory = ReportEditViewModelFactory()
+		val vmFactory =
+			ReportEditViewModelFactory()
 		vm = vmFactory.create(ReportEditViewModel::class.java)
 	}
 
