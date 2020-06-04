@@ -1,6 +1,6 @@
 package fr.spc.leosoliveres.chaldeas.model
 
-data class Measure(
+open class Measure(
 	var name:String ="Nom non défini",
 	var unitFull:String ="Unité non définie",
 	var unitAbriged:String ="Indéf."
@@ -14,6 +14,10 @@ data class Measure(
 
 	fun allUnits():String{
 		return "$unitFull - $unitAbriged"
+	}
+
+	fun nameAndAbriged():String {
+		return "$name ($unitAbriged)"
 	}
 
 	override fun toString():String {

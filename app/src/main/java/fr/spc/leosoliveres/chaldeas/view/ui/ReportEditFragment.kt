@@ -35,11 +35,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-		//TODO : récupération des données depuis Room lors de l'arrivée
-		viewModelFactory =
-			ReportEditViewModelFactory(
-				requireContext()
-			)
+		viewModelFactory = ReportEditViewModelFactory(requireContext())
 		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
@@ -81,7 +77,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 			val strings=ArrayList<String>()
 			if(newFamilylist.size==0) {
 				strings.add(resources.getString(R.string.no_families))
-				//Log.i("array",defaults.toString())
 				family_name_bar.visibility = View.INVISIBLE
 				delete_family.visibility = View.INVISIBLE
 				measure_recyclerview.visibility = View.INVISIBLE
@@ -92,7 +87,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 				for(i in 0 until newFamilylist.count()-1) strings.add(newFamilylist[i].toString())
 				updateFamilyList(strings)
 			}
-			Log.i("spinner",strings.toString())
 			updateFamilyList(strings)
 		})
 

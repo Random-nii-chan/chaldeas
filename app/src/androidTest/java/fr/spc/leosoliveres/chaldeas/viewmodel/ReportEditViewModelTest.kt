@@ -29,10 +29,10 @@ class ReportEditViewModelTest {
 	@Test
 	fun testAddNewMeasure() {
 		//copy the values
-		val initialSize = vm.currentFamily.value!!.size()
+		val initialSize = vm.currentFamily.value!!.measureCount()
 		//adding in the measures
 		vm.addMeasure(Measure("test","test","t"))
-		val newSize = vm.currentFamily.value!!.size()
+		val newSize = vm.currentFamily.value!!.measureCount()
 		//check if
 		assertThat(newSize).isEqualTo(initialSize+1)
 	}
@@ -40,10 +40,10 @@ class ReportEditViewModelTest {
 	@Test
 	fun deleteMeasure() {
 		//copy the values
-		val initialSize = vm.currentFamily.value!!.size()
+		val initialSize = vm.currentFamily.value!!.measureCount()
 		//deleting the measures
 		vm.deleteMeasure(vm.currentFamily.value!!.measures[0])
-		val newSize = vm.currentFamily.value!!.size()
+		val newSize = vm.currentFamily.value!!.measureCount()
 		//check
 		assertThat(newSize).isEqualTo(initialSize-1)
 	}

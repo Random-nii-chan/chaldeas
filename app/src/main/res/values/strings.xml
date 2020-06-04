@@ -8,7 +8,6 @@
     <string name="add">Ajouter</string>
     <string name="submit">Sauvegarder préférences</string>
 
-
     <!--Annulations-->
     <string name="no">Non</string>
     <string name="cancel">Annuler</string>
@@ -37,4 +36,5 @@
     <string name="hint_family_name">Nom de la famille</string>
     <string name="hint_measure_unit">Unité</string>
     <string name="hint_measure_abriged">Unité abrégée</string>
+    <string name="value">Valeur</string>
 </resources>

@@ -37,7 +37,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|right">
+                android:layout_gravity="center_vertical|end">
 
                 <TextView
                     android:id="@+id/latitude"
@@ -82,23 +82,27 @@
                 android:text="Source d'alimentation"
                 android:textSize="20sp" />
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:baselineAligned="false">
 
-        </ScrollView>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ExpandableListView
+            android:id="@+id/dynamic_form"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        </ScrollView>
+        </ExpandableListView>
+
+        <ExpandableListView
+            android:id="@+id/previous_report"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ExpandableListView>
     </LinearLayout>
-
 </LinearLayout>

@@ -1,5 +1,33 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
-class SiteDetailViewModel {
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import fr.spc.leosoliveres.chaldeas.model.Family
+import fr.spc.leosoliveres.chaldeas.model.Site
+import org.json.JSONArray
+import java.io.File
 
+class SiteDetailViewModel(ctx: Context, var site:Site): ViewModel() {
+	private val gson = GsonBuilder().setPrettyPrinting().create()
+
+	private var _families = MutableLiveData<ArrayList<Family>>()
+	val families:LiveData<ArrayList<Family>>
+		get() = _families
+
+	init {
+		_families.value = gson.fromJson(
+			getPrefsJSON(ctx),
+			object: TypeToken<ArrayList<Family>>(){}.type
+		)
+	}
+
+	private fun getPrefsJSON(ctx:Context):String {
+		val file = File(ctx.filesDir, ReportEditViewModel.PREFS_FILENAME)
+		val content = JSONArray(file.readText())
+		return content.toString()
+	}
 }

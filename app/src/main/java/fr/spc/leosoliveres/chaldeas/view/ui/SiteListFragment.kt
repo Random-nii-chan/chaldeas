@@ -17,17 +17,12 @@ import kotlinx.android.synthetic.main.fragment_site_list.*
 
 class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListener {
 
-	companion object {
-		fun newInstance() = SiteListFragment()
-	}
-
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		return inflater.inflate(R.layout.fragment_site_list, container, false)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
-		// TODO: Use the ViewModel
 		siteRecyclerView.layoutManager = LinearLayoutManager(activity)
 		siteRecyclerView.adapter = SitesAdapter(initVariables(20),this)
 	}

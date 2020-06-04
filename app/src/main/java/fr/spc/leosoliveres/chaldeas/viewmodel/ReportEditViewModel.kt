@@ -17,7 +17,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 
-class ReportEditViewModel(private val ctx: Context) : ViewModel() {
+class ReportEditViewModel(ctx: Context) : ViewModel() {
 
 	companion object {
 		const val PREFS_FILENAME = "prefs.json"
@@ -55,7 +55,6 @@ class ReportEditViewModel(private val ctx: Context) : ViewModel() {
 	}
 
 	fun saveJson(ctx:Context) {
-		//TODO paramétrer sortie
 		val jsonString:String
 		jsonString = if(_familyList.value!!.size == 0) {
 			JSONArray().toString()
@@ -74,7 +73,6 @@ class ReportEditViewModel(private val ctx: Context) : ViewModel() {
 	}
 
 	private fun loadJson(ctx: Context):String {
-		//TODO paramétrer chargement
 		val file = File(ctx.filesDir, PREFS_FILENAME)
 		val content = JSONArray(file.readText())
 		return content.toString()
