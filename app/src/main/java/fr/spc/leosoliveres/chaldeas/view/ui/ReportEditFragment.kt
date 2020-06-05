@@ -30,10 +30,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 	private lateinit var viewModel:ReportEditViewModel
 	private lateinit var viewModelFactory: ReportEditViewModelFactory
 
-	companion object {
-		fun newInstance() = ReportEditFragment()
-	}
-
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		viewModelFactory = ReportEditViewModelFactory(requireContext())
 		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)

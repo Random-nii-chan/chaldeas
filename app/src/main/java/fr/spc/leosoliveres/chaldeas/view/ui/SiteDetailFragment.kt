@@ -25,10 +25,14 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 		viewModelFactory = SiteDetailViewModelFactory(requireContext(),site)
 		viewModel = viewModelFactory.create(SiteDetailViewModel::class.java)
 
-		listAdapter = ExpandableDynamicFormAdapter(requireContext(),viewModel.families.value!!)
-		dynamic_form.setAdapter(listAdapter)
-
 		return inflater.inflate(R.layout.fragment_site_detail, container, false)
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		listAdapter = ExpandableDynamicFormAdapter(requireContext(),viewModel.families)
+		dynamic_form.setAdapter(listAdapter)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {

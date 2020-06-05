@@ -1,7 +1,6 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
@@ -14,12 +13,10 @@ import java.io.File
 class SiteDetailViewModel(ctx: Context, var site:Site): ViewModel() {
 	private val gson = GsonBuilder().setPrettyPrinting().create()
 
-	private var _families = MutableLiveData<ArrayList<Family>>()
-	val families:LiveData<ArrayList<Family>>
-		get() = _families
+	var families = ArrayList<Family>()
 
 	init {
-		_families.value = gson.fromJson(
+		families = gson.fromJson(
 			getPrefsJSON(ctx),
 			object: TypeToken<ArrayList<Family>>(){}.type
 		)

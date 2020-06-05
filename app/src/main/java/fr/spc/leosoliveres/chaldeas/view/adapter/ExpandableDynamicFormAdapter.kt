@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.dynamic_form_parent.view.*
 
 class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList<Family>) : BaseExpandableListAdapter() {
 
-	var families:ArrayList<Family> = _families
+	private var families:ArrayList<Family> = _families
 
 	override fun getGroup(groupPosition: Int): String {
 		//retourne le nom de la famille au groupe groupPosition
