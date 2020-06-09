@@ -36,6 +36,10 @@ android {
 
 dependencies {
     def nav_version = "2.3.0-beta01"
+    def room_version = "2.2.5" // check latest version from docs
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.android:flexbox:2.0.1'
@@ -68,7 +72,7 @@ dependencies {
     // Assertions
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:truth:1.2.0'
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0-beta01"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 }
 
 kapt {

@@ -32,7 +32,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		viewModelFactory = ReportEditViewModelFactory(requireContext())
-		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
+		viewModel = viewModelFactory.create(ReportEditViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
 	}

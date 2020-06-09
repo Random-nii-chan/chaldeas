@@ -16,35 +16,23 @@ class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList
 
 	private var families:ArrayList<Family> = _families
 
-	override fun getGroup(groupPosition: Int): String {
-		//retourne le nom de la famille au groupe groupPosition
-		return families[groupPosition].name
-	}
+	override fun getGroup(groupPosition: Int): String =
+		families[groupPosition].name
 
-	override fun isChildSelectable(p0: Int, p1: Int): Boolean {
-		return true
-	}
+	override fun isChildSelectable(p0: Int, p1: Int): Boolean = true
 
-	override fun hasStableIds(): Boolean {
-		return false
-	}
+	override fun hasStableIds(): Boolean = false
 
-	override fun getChildrenCount(groupPosition: Int): Int {
-		//retourne le nombre de mesures pour une famille
-		return families[groupPosition].measureCount()
-	}
+	override fun getChildrenCount(groupPosition: Int): Int =
+		families[groupPosition].measureCount()
 
-	override fun getChild(groupPosition: Int, childPosition: Int): Measure {
-		return families[groupPosition].measures[childPosition]
-	}
+	override fun getChild(groupPosition: Int, childPosition: Int): Measure =
+		families[groupPosition].measures[childPosition]
 
-	override fun getGroupId(groupPosition: Int): Long {
-		return groupPosition.toLong()
-	}
+	override fun getGroupId(groupPosition: Int): Long = groupPosition.toLong()
 
 	@SuppressLint("InflateParams")
 	override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, cv: View?, parent: ViewGroup?): View {
-		//TODO("This function will inflate child xml layout file and will return child view.")
 		var convertView = cv
 		val childMeasure = getChild(groupPosition,childPosition)
 		if(convertView == null) {
@@ -60,7 +48,6 @@ class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList
 
 	@SuppressLint("InflateParams")
 	override fun getGroupView(groupPosition:Int, expanded: Boolean, cv: View?, parent: ViewGroup?): View {
-		//TODO("retourne la vue parente")
 		//convertview permet de faire une sauvegarde
 		var convertView = cv
 		val headerTitle = getGroup(groupPosition)
@@ -74,11 +61,7 @@ class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList
 		return convertView
 	}
 
-	override fun getChildId(groupPosition: Int, childPosition: Int): Long {
-		return childPosition.toLong()
-	}
+	override fun getChildId(groupPosition: Int, childPosition: Int): Long = childPosition.toLong()
 
-	override fun getGroupCount(): Int {
-		return families.size
-	}
+	override fun getGroupCount(): Int = families.size
 }
