@@ -14,4 +14,7 @@ interface SiteDao {
 
 	@Query("SELECT * FROM sites ORDER BY id ASC")
 	fun getAll(): LiveData<List<Site>>
+
+	@Query("DELETE FROM sites")
+	fun deleteAll()
 }

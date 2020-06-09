@@ -32,7 +32,7 @@ class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListen
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		siteRecyclerView.layoutManager = LinearLayoutManager(activity)
-		siteRecyclerView.adapter = SitesAdapter(initVariables(),this)
+		//siteRecyclerView.adapter = SitesAdapter(initVariables(),this)
 
 		viewModel.sites.observe(viewLifecycleOwner, Observer { newList ->
 			siteRecyclerView.swapAdapter(SitesAdapter(ArrayList(newList),this),true)
@@ -41,23 +41,5 @@ class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListen
 
 	override fun onItemClicked(site:Site){
 		findNavController().navigate(R.id.action_siteListFragment_siteDetailFragment,bundleOf("site" to site))
-	}
-
-	private fun initVariables(count:Int=20):ArrayList<Site>{
-		val sites : ArrayList<Site> = ArrayList()
-
-		sites.add(Site("Nom de relais qui est bien trop long pour rentrer sur une ligne",-5.45457856f,3.89164832f))
-
-		for (i in 0..count){
-			sites.add(
-				Site(
-					"Station $i",
-					((-90..89).random() + Math.random()).toFloat(),
-					((-180..179).random() + Math.random()).toFloat()
-				)
-			)
-		}
-
-		return sites
 	}
 }
