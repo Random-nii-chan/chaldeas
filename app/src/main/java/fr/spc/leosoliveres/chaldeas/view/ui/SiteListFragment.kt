@@ -32,7 +32,7 @@ class SiteListFragment : Fragment(R.layout.fragment_site_list),OnItemClickListen
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		siteRecyclerView.layoutManager = LinearLayoutManager(activity)
-		//siteRecyclerView.adapter = SitesAdapter(initVariables(),this)
+		siteRecyclerView.adapter = SitesAdapter(viewModel.sites.value,this)
 
 		viewModel.sites.observe(viewLifecycleOwner, Observer { newList ->
 			siteRecyclerView.swapAdapter(SitesAdapter(ArrayList(newList),this),true)

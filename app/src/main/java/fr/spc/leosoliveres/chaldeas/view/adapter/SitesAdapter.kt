@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Site
 
-class SitesAdapter(private val sites: ArrayList<Site>, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
+class SitesAdapter(private val sites: List<Site>?, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val view:View = LayoutInflater.from(parent.context).inflate(R.layout.site_row, parent, false)
 		return ViewHolder(view)
 	}
 
 	override fun onBindViewHolder(holderSite: ViewHolder, position: Int) {
-		val site = sites[position]
+		val site = sites!![position]
 		holderSite.bind(site,itemClickListener)
 	}
 
-	override fun getItemCount(): Int = sites.size
+	override fun getItemCount(): Int = sites?.size ?: 0
 
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		private val nomSite: TextView = itemView.findViewById(R.id.nomSite)

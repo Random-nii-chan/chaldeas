@@ -12,6 +12,9 @@ interface SiteDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun insertSite(s: Site)
 
+	@Insert
+	fun insertAll(l:List<Site>)
+
 	@Query("SELECT * FROM sites ORDER BY id ASC")
 	fun getAll(): LiveData<List<Site>>
 
