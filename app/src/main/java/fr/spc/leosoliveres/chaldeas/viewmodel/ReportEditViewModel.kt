@@ -2,12 +2,10 @@ package fr.spc.leosoliveres.chaldeas.viewmodel
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import fr.spc.leosoliveres.chaldeas.model.Family
@@ -23,13 +21,13 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		const val PREFS_FILENAME = "prefs.json"
 	}
 
-	private var _familyList = MutableLiveData<ArrayList<Family>>()
+	private val _familyList = MutableLiveData<ArrayList<Family>>()
 	val familyList : LiveData<ArrayList<Family>>
 		get() = _familyList
 
 	private var currentFamilyIndex : Int = 0
 
-	private var _currentFamily = PropertyAwareMutableLiveData<Family>()
+	private val _currentFamily = PropertyAwareMutableLiveData<Family>()
 	val currentFamily : LiveData<Family>
 		get() = _currentFamily
 
@@ -132,7 +130,8 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		var al = ArrayList<Family>()
 		if(file.exists()) {
 			al = gson.fromJson(loadJson(ctx),object:TypeToken<ArrayList<Family>>(){}.type)
-		} else {
+		}
+		if (al.size == 0){
 			for(i in 0..count) {
 				al.add(Family("Famille N°${i}",initMeasures()))
 			}
