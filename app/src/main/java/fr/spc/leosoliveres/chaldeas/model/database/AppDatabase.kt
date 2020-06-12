@@ -5,14 +5,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import fr.spc.leosoliveres.chaldeas.model.Record
+import fr.spc.leosoliveres.chaldeas.model.Report
 import fr.spc.leosoliveres.chaldeas.model.Site
+import fr.spc.leosoliveres.chaldeas.model.dao.RecordDao
+import fr.spc.leosoliveres.chaldeas.model.dao.ReportDao
 import fr.spc.leosoliveres.chaldeas.model.dao.SiteDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Site::class], version=1, exportSchema = true)
+@Database(entities = [Site::class, Report::class, Record::class], version=1, exportSchema = true)
 abstract class AppDatabase: RoomDatabase() {
 	abstract fun siteDao(): SiteDao
+	abstract fun ReportDao(): ReportDao
+	abstract fun RecordDao(): RecordDao
+
 
 	private class AppDatabaseCallback(val context: Context) : RoomDatabase.Callback() {
 		override fun onCreate(db: SupportSQLiteDatabase) {

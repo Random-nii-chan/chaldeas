@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Site
@@ -12,7 +14,6 @@ import fr.spc.leosoliveres.chaldeas.view.adapter.ExpandableDynamicFormAdapter
 import fr.spc.leosoliveres.chaldeas.viewmodel.SiteDetailViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.factory.SiteDetailViewModelFactory
 import kotlinx.android.synthetic.main.fragment_site_detail.*
-import org.json.JSONArray
 
 class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 	private lateinit var viewModelFactory:SiteDetailViewModelFactory
@@ -30,14 +31,37 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-
-		listAdapter = ExpandableDynamicFormAdapter(requireContext(),viewModel.families)
+		listAdapter = ExpandableDynamicFormAdapter(requireContext(),viewModel.formTemplate)
 		dynamic_form.setAdapter(listAdapter)
 	}
 
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 		fillSiteGeneralInfo(viewModel.site)
+
+		report_selector_spinner.adapter = ArrayAdapter(
+			requireContext(),
+			android.R.layout.simple_spinner_dropdown_item,
+			viewModel.getPreviousReportsSummaries()
+		)
+
+		viewModel.previousReports.observe(viewLifecycleOwner, Observer { newReports ->
+			val strings = ArrayList<String>()
+			if(newReports.isEmpty()) {
+				strings.add("Aucun rapport créé pour cette station")
+			} else {
+				for(i in newReports) strings.add(i.report.summary())
+			}
+			updateReportSummary(strings)
+		})
+	}
+
+	private fun updateReportSummary(strings:List<String>) {
+		report_selector_spinner.adapter = ArrayAdapter(
+			requireContext(),
+			android.R.layout.simple_spinner_dropdown_item,
+			strings
+		)
 	}
 
 	private fun fillSiteGeneralInfo(site:Site) {

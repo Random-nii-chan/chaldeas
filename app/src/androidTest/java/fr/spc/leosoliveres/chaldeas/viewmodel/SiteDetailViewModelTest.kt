@@ -29,6 +29,6 @@ class SiteDetailViewModelTest {
 
 	@Test
 	fun testInit() {
-		assertTrue(vm.families != ArrayList<Family>())
+		assertTrue(vm.formTemplate != ArrayList<Family>())
 	}
 }

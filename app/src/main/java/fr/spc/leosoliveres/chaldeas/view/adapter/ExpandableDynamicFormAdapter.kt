@@ -9,8 +9,8 @@ import android.widget.BaseExpandableListAdapter
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Family
 import fr.spc.leosoliveres.chaldeas.model.Measure
-import kotlinx.android.synthetic.main.dynamic_form_element.view.*
-import kotlinx.android.synthetic.main.dynamic_form_parent.view.*
+import kotlinx.android.synthetic.main.expandable_dynamic_line.view.*
+import kotlinx.android.synthetic.main.expandable_header.view.*
 
 class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList<Family>) : BaseExpandableListAdapter() {
 
@@ -37,7 +37,7 @@ class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList
 		val childMeasure = getChild(groupPosition,childPosition)
 		if(convertView == null) {
 			val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-			convertView = inflater.inflate(R.layout.dynamic_form_element,null)
+			convertView = inflater.inflate(R.layout.expandable_dynamic_line,null)
 		}
 
 		convertView!!.record_label.text = childMeasure.nameAndAbriged()
@@ -53,7 +53,7 @@ class ExpandableDynamicFormAdapter(private val ctx: Context, _families:ArrayList
 		val headerTitle = getGroup(groupPosition)
 		if(convertView == null) {
 			val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-			convertView = inflater.inflate(R.layout.dynamic_form_parent,null)
+			convertView = inflater.inflate(R.layout.expandable_header,null)
 		}
 
 		convertView!!.category_title.text = headerTitle

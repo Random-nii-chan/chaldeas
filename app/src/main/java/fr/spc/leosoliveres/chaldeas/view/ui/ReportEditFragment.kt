@@ -5,14 +5,12 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.chaldeas.R
@@ -63,7 +61,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 			viewModel.saveJson(requireContext())
 		}
 
-
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
 			updateMeasures(newFamily)
 			updateFamilyName(newFamily.name)
@@ -81,7 +78,6 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 				delete_family.visibility = View.VISIBLE
 				measure_recyclerview.visibility = View.VISIBLE
 				for(i in 0 until newFamilylist.count()-1) strings.add(newFamilylist[i].toString())
-				updateFamilyList(strings)
 			}
 			updateFamilyList(strings)
 		})

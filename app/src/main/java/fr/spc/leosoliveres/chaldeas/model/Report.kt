@@ -11,7 +11,9 @@ data class Report(
 	@PrimaryKey(autoGenerate = true) @ColumnInfo(name="report_id") val id:Long,
 	val siteId:Long,
 	val agents:String,
-	val date: Date
+	val date: Date,
+	val comment:String,
+	val gravity:Int
 ) {
 	fun summary():String = "$date ($agents)"
 }
