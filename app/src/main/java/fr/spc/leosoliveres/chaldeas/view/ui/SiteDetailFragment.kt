@@ -23,7 +23,7 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		// Inflate the layout for this fragment
 		val site = requireArguments().getParcelable<Site>("site")!!
-		viewModelFactory = SiteDetailViewModelFactory(requireContext(),site)
+		viewModelFactory = SiteDetailViewModelFactory(requireActivity().application,site)
 		viewModel = viewModelFactory.create(SiteDetailViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_site_detail, container, false)

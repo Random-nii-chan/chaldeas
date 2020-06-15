@@ -12,7 +12,7 @@ interface SiteDao {
 	@Insert
 	fun insertAll(l:List<Site>)
 
-	@Query("SELECT * FROM sites ORDER BY id ASC")
+	@Query("SELECT * FROM sites ORDER BY site_id ASC")
 	fun getAll(): LiveData<List<Site>>
 
 	@Query("DELETE FROM sites")

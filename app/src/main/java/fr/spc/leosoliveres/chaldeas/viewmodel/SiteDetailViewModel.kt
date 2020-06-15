@@ -21,8 +21,8 @@ import java.io.FileOutputStream
 
 class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 	private val siteDao: SiteDao = AppDatabase.getDatabase(app)!!.siteDao()
-	private val reportDao: ReportDao = AppDatabase.getDatabase(app)!!.ReportDao()
-	private val recordDao: RecordDao = AppDatabase.getDatabase(app)!!.RecordDao()
+	private val reportDao: ReportDao = AppDatabase.getDatabase(app)!!.reportDao()
+	private val recordDao: RecordDao = AppDatabase.getDatabase(app)!!.recordDao()
 	private val repo = AppRepo(siteDao, reportDao, recordDao)
 
 	private val gson = GsonBuilder().setPrettyPrinting().create()

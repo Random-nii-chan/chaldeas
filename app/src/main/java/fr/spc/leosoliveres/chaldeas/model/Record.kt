@@ -2,6 +2,7 @@ package fr.spc.leosoliveres.chaldeas.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName="Records")
@@ -16,6 +17,7 @@ data class Record(
 	val unitAbriged:String,
 	var value:Float
 ) {
+	@Ignore
 	private val exportedString:String = if(value.isNaN()) "non renseigné" else value.toString()
 	fun export():String =  "$name : $exportedString $unitAbriged"
 }

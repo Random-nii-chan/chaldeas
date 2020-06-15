@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import fr.spc.leosoliveres.chaldeas.model.Record
 import fr.spc.leosoliveres.chaldeas.model.Report
@@ -15,10 +16,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(entities = [Site::class, Report::class, Record::class], version=1, exportSchema = true)
+@TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
 	abstract fun siteDao(): SiteDao
-	abstract fun ReportDao(): ReportDao
-	abstract fun RecordDao(): RecordDao
+	abstract fun reportDao(): ReportDao
+	abstract fun recordDao(): RecordDao
 
 
 	private class AppDatabaseCallback(val context: Context) : RoomDatabase.Callback() {
