@@ -21,6 +21,6 @@ class SiteListViewModel(app: Application) : ViewModel() {
 	get() = if(field.value == null) field else MutableLiveData()
 
 	init {
-		sites = repo.allSite
+		sites = repo.allSites
 	}
 }

@@ -64,4 +64,8 @@ class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 		val content = JSONArray(file.readText())
 		return content.toString()
 	}
+
+	fun saveReport() {
+		//TODO sauvegarde du rapport
+	}
 }

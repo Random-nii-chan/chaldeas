@@ -94,9 +94,12 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 	}
 
 	fun duplicateMeasure(m:Measure) {
+		/*
 		val tempList = _currentFamily.value?.measures
 		tempList?.add(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
 		_currentFamily.value!!.measures = tempList!!
+		*/
+		 _currentFamily.value!!.addMeasure(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
 	}
 
 	fun addMeasure(m:Measure) {

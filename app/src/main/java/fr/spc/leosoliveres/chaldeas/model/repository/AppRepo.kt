@@ -13,7 +13,7 @@ class AppRepo(
 	private val reportDao: ReportDao,
 	private val recordDao: RecordDao
 ) {
-	val allSite: LiveData<List<Site>> = siteDao.getAll()
+	val allSites: LiveData<List<Site>> = siteDao.getAll()
 
 	fun getReportsForSite(id:Long):LiveData<List<ReportWithRecords>> =
 		reportDao.getReportsWithRecord(id)

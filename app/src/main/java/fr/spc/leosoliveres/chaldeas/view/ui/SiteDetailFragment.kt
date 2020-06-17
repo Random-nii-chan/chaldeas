@@ -54,6 +54,10 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 			}
 			updateReportSummary(strings)
 		})
+
+		save_report.setOnClickListener() {
+			viewModel.saveReport()
+		}
 	}
 
 	private fun updateReportSummary(strings:List<String>) {
