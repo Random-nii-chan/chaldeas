@@ -15,9 +15,9 @@ data class Record(
 	val name:String,
 	val unitFull:String,
 	val unitAbriged:String,
-	var value:Float
+	var value:String
 ) {
 	@Ignore
-	private val exportedString:String = if(value.isNaN()) "non renseigné" else value.toString()
+	private val exportedString:String = if(value.isEmpty()) "non renseigné" else value
 	fun export():String =  "$name : $exportedString $unitAbriged"
 }

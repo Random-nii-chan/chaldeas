@@ -15,32 +15,12 @@ import fr.spc.leosoliveres.chaldeas.model.dao.SiteDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Site::class, Report::class, Record::class], version=1, exportSchema = true)
 @TypeConverters(Converters::class)
+@Database(entities = [Site::class, Report::class, Record::class], version=1, exportSchema = true)
 abstract class AppDatabase: RoomDatabase() {
 	abstract fun siteDao(): SiteDao
 	abstract fun reportDao(): ReportDao
 	abstract fun recordDao(): RecordDao
-
-
-	private class AppDatabaseCallback(val context: Context) : RoomDatabase.Callback() {
-		override fun onCreate(db: SupportSQLiteDatabase) {
-			super.onCreate(db)
-			ioThread() {
-				val siteDao = getDatabase(context)!!.siteDao()
-				val count = 20
-				for (i in 0..count) {
-					siteDao.insertSite(
-						Site(
-							"Station $i",
-							((-90..89).random() + Math.random()).toFloat(),
-							((-180..179).random() + Math.random()).toFloat()
-						)
-					)
-				}
-			}
-		}
-	}
 
 	companion object {
 		@Volatile
@@ -61,5 +41,24 @@ abstract class AppDatabase: RoomDatabase() {
 			}
 		}
 
+	}
+
+	private class AppDatabaseCallback(val context: Context) : RoomDatabase.Callback() {
+		override fun onCreate(db: SupportSQLiteDatabase) {
+			super.onCreate(db)
+			ioThread() {
+				val siteDao = getDatabase(context)!!.siteDao()
+				val count = 20
+				for (i in 0..count) {
+					siteDao.insertSite(
+						Site(
+							"Station $i",
+							((-90..89).random() + Math.random()).toFloat(),
+							((-180..179).random() + Math.random()).toFloat()
+						)
+					)
+				}
+			}
+		}
 	}
 }
