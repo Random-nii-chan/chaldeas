@@ -16,7 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @TypeConverters(Converters::class)
-@Database(entities = [Site::class, Report::class, Record::class], version=1, exportSchema = true)
+@Database(entities = [Site::class, Report::class, Record::class], version=1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 	abstract fun siteDao(): SiteDao
 	abstract fun reportDao(): ReportDao

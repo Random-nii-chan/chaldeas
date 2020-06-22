@@ -1,5 +1,6 @@
 package fr.spc.leosoliveres.chaldeas.viewmodel
 
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -18,17 +19,4 @@ class SiteDetailViewModelTest {
 
 	@get:Rule
 	val rule = InstantTaskExecutorRule()
-
-	@Before
-	fun setupViewModel() {
-		val context = InstrumentationRegistry.getInstrumentation().context
-		val site = Site("Site de test", 0.49494f, 0.57848f)
-		val vmFactory = SiteDetailViewModelFactory(context,site)
-		val vm = vmFactory.create(SiteDetailViewModel::class.java)
-	}
-
-	@Test
-	fun testInit() {
-		assertTrue(vm.formTemplate != ArrayList<Family>())
-	}
 }
