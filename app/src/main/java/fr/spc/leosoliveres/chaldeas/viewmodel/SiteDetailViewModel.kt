@@ -66,6 +66,6 @@ class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 	}
 
 	fun saveReport() {
-		//TODO sauvegarde du rapport
+		//repo.insertReport()
 	}
 }

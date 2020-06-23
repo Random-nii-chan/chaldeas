@@ -1,9 +1,8 @@
 package fr.spc.leosoliveres.chaldeas.model.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
+import fr.spc.leosoliveres.chaldeas.model.Report
 import fr.spc.leosoliveres.chaldeas.model.relations.ReportWithRecords
 
 @Dao

@@ -17,4 +17,7 @@ class AppRepo(
 
 	fun getReportsForSite(id:Long):LiveData<List<ReportWithRecords>> =
 		reportDao.getReportsWithRecord(id)
+
+	fun insertReport(rwr:ReportWithRecords) =
+		recordDao.insertReportWithRecords(rwr.report,rwr.records)
 }
