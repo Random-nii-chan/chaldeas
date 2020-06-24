@@ -8,9 +8,9 @@ open class Measure(
 
 	init {
 		if(name.isEmpty() || name.isBlank()) name = "Nom non défini"
-		if(unitFull.isEmpty() || unitFull.isBlank()) unitFull = "Unité non définie"
-		if(unitAbriged.isEmpty() || unitAbriged.isBlank()) unitAbriged = "Indéf."
 	}
+
+	constructor(_name:String) : this(_name,"","")
 
 	fun allUnits():String{
 		return "$unitFull - $unitAbriged"

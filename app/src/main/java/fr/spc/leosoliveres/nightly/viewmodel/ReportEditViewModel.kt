@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import fr.spc.leosoliveres.nightly.model.DefaultData
 import fr.spc.leosoliveres.nightly.model.Family
 import fr.spc.leosoliveres.nightly.model.Measure
 import fr.spc.leosoliveres.nightly.model.PropertyAwareMutableLiveData
@@ -21,44 +22,40 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		const val PREFS_FILENAME = "prefs.json"
 	}
 
-	private val _familyList = MutableLiveData<ArrayList<Family>>()
-	val familyList : LiveData<ArrayList<Family>>
-		get() = _familyList
+	val familyList = MutableLiveData<ArrayList<Family>>()
+
+	val currentFamily = PropertyAwareMutableLiveData<Family>()
 
 	private var currentFamilyIndex : Int = 0
-
-	private val _currentFamily = PropertyAwareMutableLiveData<Family>()
-	val currentFamily : LiveData<Family>
-		get() = _currentFamily
 
 	private val gson = GsonBuilder().setPrettyPrinting().create()
 
 	init {
-		_familyList.value = initFamilies(ctx)
-		_currentFamily.value = _familyList.value!![currentFamilyIndex]
+		this.familyList.value = initFamilies(ctx)
+		this.currentFamily.value = this.familyList.value!![currentFamilyIndex]
 	}
 
 	fun getFamilyIndex():Int = currentFamilyIndex
 
 	fun changeFamily(i:Int) {
-		val maxValue = _familyList.value!!.size -1
+		val maxValue = this.familyList.value!!.size -1
 		currentFamilyIndex = if(i in 0..maxValue) i else maxValue
-		_currentFamily.value = _familyList.value!![currentFamilyIndex]
+		this.currentFamily.value = this.familyList.value!![currentFamilyIndex]
 	}
 
 	fun familiesToString():ArrayList<String> {
 		val al = ArrayList<String>()
-		for(i in 0 until _familyList.value!!.size) al.add(_familyList.value!![i].toString())
+		for(i in 0 until this.familyList.value!!.size) al.add(this.familyList.value!![i].toString())
 		return al
 	}
 
 	fun saveJson(ctx:Context) {
 		val jsonString:String
-		jsonString = if(_familyList.value!!.size == 0) {
+		jsonString = if(this.familyList.value!!.size == 0) {
 			JSONArray().toString()
 		} else {
 			val array = JSONArray()
-			for(f in _familyList.value!!) {
+			for(f in this.familyList.value!!) {
 				array.put(encodeFamily(f))
 			}
 			array.toString()
@@ -82,48 +79,46 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 
 	//Méthodes CRUD mesures
 	fun editMeasure(m:Measure,newData:Measure) {
-		val tempList = _currentFamily.value?.measures
-		val index = tempList?.indexOf(m)
-		if (index != null) tempList[index] = newData
+		val tempList = this.currentFamily.value!!.measures
+		val index = tempList.indexOf(m)
+		tempList[index] = newData
 		//besoin d'assigner une valeur pour déclencher l'évènement d'observations
-		_currentFamily.value!!.measures = tempList!!
+		this.currentFamily.value!!.measures = tempList
 	}
 
 	fun deleteMeasure(m:Measure) {
-		_currentFamily.value!!.removeMeasure(_currentFamily.value!!.getIndex(m))
+		val tempList = this.currentFamily.value!!.measures
+		val index = this.currentFamily.value!!.getIndex(m)
+		tempList.removeAt(index)
+		this.currentFamily.value!!.measures = tempList
 	}
 
 	fun duplicateMeasure(m:Measure) {
-		/*
-		val tempList = _currentFamily.value?.measures
-		tempList?.add(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
-		_currentFamily.value!!.measures = tempList!!
-		*/
-		 _currentFamily.value!!.addMeasure(Measure("Copie de ${m.name}",m.unitFull,m.unitAbriged))
+		addMeasure(m)
 	}
 
 	fun addMeasure(m:Measure) {
-		val tempList = _currentFamily.value!!.measures
+		val tempList = this.currentFamily.value!!.measures
 		tempList.add(m)
-		_currentFamily.value!!.measures = tempList
+		this.currentFamily.value!!.measures = tempList
 	}
 
 	//Méthodes CRUD Familles
 	fun renameFamily(n:String) {
-		_currentFamily.value!!.name = n
+		this.currentFamily.value!!.name = n
 	}
 
 	fun addFamily(f:Family) {
-		val tempList = _familyList.value
+		val tempList = this.familyList.value
 		tempList!!.add(f)
-		_familyList.value = tempList
-		currentFamilyIndex = _familyList.value!!.size-1
+		this.familyList.value = tempList
+		currentFamilyIndex = this.familyList.value!!.size-1
 	}
 
 	fun deleteFamily(f:Family) {
-		val tempList = _familyList.value
+		val tempList = this.familyList.value
 		tempList!!.remove(f)
-		_familyList.value = tempList
+		this.familyList.value = tempList
 		currentFamilyIndex--
 	}
 
@@ -135,9 +130,7 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 			al = gson.fromJson(loadJson(ctx),object:TypeToken<ArrayList<Family>>(){}.type)
 		}
 		if (al.size == 0){
-			for(i in 0..count) {
-				al.add(Family("Famille N°${i}",initMeasures()))
-			}
+			al = ArrayList(DefaultData.defaultFamilies())
 		}
 		return al
 	}

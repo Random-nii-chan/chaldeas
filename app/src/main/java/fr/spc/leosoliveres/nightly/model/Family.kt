@@ -27,18 +27,6 @@ data class Family(private val _name:String) : BaseObservable() {
 		measures = _measures
 	}
 
-	fun removeMeasure(i:Int) {
-		val tempList = measures
-		tempList.removeAt(i)
-		measures = tempList
-	}
-
-	fun addMeasure(m:Measure) {
-		val tempList = measures
-		tempList.add(m)
-		measures = tempList
-	}
-
 	fun getIndex(m:Measure):Int {
 		return if(measures.contains(m))
 			measures.indexOf(m)

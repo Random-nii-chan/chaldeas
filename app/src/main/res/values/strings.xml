@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Chaldeas Nightly</string>
+    <string name="app_name">Chaldeas Beta</string>
 
     <!--Confirmations-->
     <string name="apply">Appliquer</string>
     <string name="yes">Oui</string>
     <string name="rename">Renommer</string>
-    <string name="add">Ajouter</string>
+    <string name="add">Ajouter</string>J'ai
     <string name="submit">Sauvegarder préférences</string>
 
     <!--Annulations-->
