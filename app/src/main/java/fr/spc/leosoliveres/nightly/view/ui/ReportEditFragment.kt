@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import fr.spc.leosoliveres.nightly.R
@@ -30,7 +31,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 		viewModelFactory = ReportEditViewModelFactory(requireContext())
-		viewModel = viewModelFactory.create(ReportEditViewModel::class.java)
+		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
 	}
