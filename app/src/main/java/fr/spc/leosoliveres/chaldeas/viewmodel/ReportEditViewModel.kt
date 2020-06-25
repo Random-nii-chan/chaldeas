@@ -15,18 +15,24 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 
+//viewmodel pour l'édition du modèle de rapport
 class ReportEditViewModel(ctx: Context) : ViewModel() {
 
+	//attribut statique pour la sauvegarde des préférences
 	companion object {
 		const val PREFS_FILENAME = "prefs.json"
 	}
 
+	//liste des familles
 	val familyList = MutableLiveData<ArrayList<Family>>()
 
+	//famille en train d'être éditée
 	val currentFamily = PropertyAwareMutableLiveData<Family>()
 
+	//index de la famille éditée
 	private var currentFamilyIndex : Int = 0
 
+	//constructeur gson permettant la conversion gson-objet
 	private val gson = GsonBuilder().setPrettyPrinting().create()
 
 	init {
@@ -36,18 +42,21 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 
 	fun getFamilyIndex():Int = currentFamilyIndex
 
+	//changer de famille (sélection d'un élément dans le spinner)
 	fun changeFamily(i:Int) {
 		val maxValue = this.familyList.value!!.size -1
 		currentFamilyIndex = if(i in 0..maxValue) i else maxValue
 		this.currentFamily.value = this.familyList.value!![currentFamilyIndex]
 	}
 
+	//convertir la liste des noms de familles en arraylist de string
 	fun familiesToString():ArrayList<String> {
 		val al = ArrayList<String>()
 		for(i in 0 until this.familyList.value!!.size) al.add(this.familyList.value!![i].toString())
 		return al
 	}
 
+	//sauvegarde des préférences en format JSON
 	fun saveJson(ctx:Context) {
 		val jsonString:String
 		jsonString = if(this.familyList.value!!.size == 0) {
@@ -60,12 +69,14 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 			array.toString()
 		}
 
+		//écriture sur le stockage internet de l'application
 		val fos: FileOutputStream? = ctx.applicationContext.openFileOutput(PREFS_FILENAME,MODE_PRIVATE)
 		fos?.write(jsonString.toByteArray())
 		Toast.makeText(ctx,"Modèle de rapport sauvegardé sur ${ctx.filesDir}/${PREFS_FILENAME}",Toast.LENGTH_LONG).show()
 		fos?.close()
 	}
 
+	//chargement du fichier JSON en format string
 	private fun loadJson(ctx: Context):String {
 		val file = File(ctx.filesDir, PREFS_FILENAME)
 		val content = JSONArray(file.readText())
@@ -78,10 +89,12 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 
 	//Méthodes CRUD mesures
 	fun editMeasure(m:Measure,newData:Measure) {
+		//récupérer une copie de la liste
 		val tempList = this.currentFamily.value!!.measures
+		//appliquer les modifications
 		val index = tempList.indexOf(m)
 		tempList[index] = newData
-		//besoin d'assigner une valeur pour déclencher l'évènement d'observations
+		//réassigner pour déclencher l'évènement d'observation
 		this.currentFamily.value!!.measures = tempList
 	}
 
@@ -121,7 +134,7 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 		currentFamilyIndex--
 	}
 
-	//initialisations
+	//initialisation
 	private fun initFamilies(ctx:Context,count:Int=3):ArrayList<Family> {
 		val file = File(ctx.filesDir, PREFS_FILENAME)
 		var al = ArrayList<Family>()
@@ -132,11 +145,5 @@ class ReportEditViewModel(ctx: Context) : ViewModel() {
 			al = ArrayList(DefaultData.defaultFamilies())
 		}
 		return al
-	}
-
-	private fun initMeasures(count:Int=5):ArrayList<Measure>{
-		val arrayList = ArrayList<Measure>()
-		for(i in 0..count) arrayList.add(Measure("Mesure n°$i", "Unité $i", "U$i"))
-		return arrayList
 	}
 }

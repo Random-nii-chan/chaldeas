@@ -11,16 +11,19 @@ import fr.spc.leosoliveres.chaldeas.model.dao.SiteDao
 import fr.spc.leosoliveres.chaldeas.model.database.AppDatabase
 import fr.spc.leosoliveres.chaldeas.model.repository.AppRepo
 
+//viewmodel liste des sites
 class SiteListViewModel(app: Application) : ViewModel() {
 	private val siteDao: SiteDao = AppDatabase.getDatabase(app)!!.siteDao()
 	private val reportDao: ReportDao = AppDatabase.getDatabase(app)!!.reportDao()
 	private val recordDao: RecordDao = AppDatabase.getDatabase(app)!!.recordDao()
 	private val repo = AppRepo(siteDao, reportDao, recordDao)
 
+	//les sites sont observés
 	var sites: LiveData<List<Site>>
 	get() = if(field.value == null) field else MutableLiveData()
 
 	init {
+		//récupérer la liste des sites depuis le repository
 		sites = repo.allSites
 	}
 }

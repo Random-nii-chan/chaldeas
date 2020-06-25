@@ -19,8 +19,9 @@ import fr.spc.leosoliveres.chaldeas.viewmodel.ReportEditViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.factory.ReportEditViewModelFactory
 import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 
+//adapter de la recyclerview de la liste des mesures dans l'édition du modèle du rapport
 class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fragment:Fragment) : RecyclerView.Adapter<MeasuresAdapter.ViewHolder>() {
-
+	//création du viewmodel avec une fabrique concrète
 	private var viewModelFactory: ReportEditViewModelFactory =
 		ReportEditViewModelFactory(
 			fragment.requireContext()
@@ -48,6 +49,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fra
 		holderSite.itemView.findViewById<Button>(R.id.button_duplicate).setOnClickListener { viewModel.duplicateMeasure(item!!) }
 	}
 
+	//affiche une boîte de dialogue pré remplie permettant d'éditer les informations d'une mesure
 	@SuppressLint("InflateParams")
 	private fun showAlertEdit(ctx: Context,m:Measure){
 		val builder = AlertDialog.Builder(ctx)
@@ -59,6 +61,7 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fra
 		builder.setView(dialogView)
 		builder.setTitle(R.string.edit_measure).apply{
 			setPositiveButton(R.string.apply) { _: DialogInterface, _: Int ->
+				//appel du viewmodel pour modifier
 				val newData = Measure(
 					dialogView.measure_name.text.toString(),
 					dialogView.unit_full.text.toString(),
@@ -72,12 +75,14 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fra
 		builder.show()
 	}
 
+	//affiche une boîte de dialogue demandant de confirmer la suppression
 	@SuppressLint("InflateParams")
 	private fun showAlertDelete(ctx:Context, m:Measure) {
 		val builder = AlertDialog.Builder(ctx)
 
 		builder.setTitle(R.string.delete_measure).apply{
 			setPositiveButton(R.string.yes) { _: DialogInterface, _: Int ->
+				//appel du viewmodel
 				viewModel.deleteMeasure(m)
 			}
 			setNegativeButton(R.string.no) { dialog:DialogInterface, _:Int ->
@@ -87,12 +92,14 @@ class MeasuresAdapter(private val measures: ArrayList<Measure>?, private val fra
 		builder.show()
 	}
 
+	//préremplir la vue en paramètre
 	private fun autofill(mainView:View, measure:Measure){
 		mainView.findViewById<EditText>(R.id.measure_name).setText(measure.name)
 		mainView.findViewById<EditText>(R.id.unit_full).setText(measure.unitFull)
 		mainView.findViewById<EditText>(R.id.unit_abriged).setText(measure.unitAbriged)
 	}
 
+	//obtenir le nombre d'éléments dans la recyclerview
 	override fun getItemCount(): Int = measures!!.size
 
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

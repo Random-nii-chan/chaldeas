@@ -12,6 +12,8 @@ import fr.spc.leosoliveres.chaldeas.model.relations.ReportWithRecords
 import kotlinx.android.synthetic.main.expandable_header.view.*
 import kotlinx.android.synthetic.main.expandable_report_line.view.*
 
+//les fonctions sont les mêmes que ExpandablePreviousReportAdapter
+//TODO peut être soumis à changements
 class ExpandablePreviousReportAdapter(
 	private val ctx: Context,
 	private val content : ReportWithRecords

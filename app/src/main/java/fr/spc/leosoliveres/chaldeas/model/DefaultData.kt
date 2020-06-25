@@ -2,6 +2,7 @@ package fr.spc.leosoliveres.chaldeas.model
 
 import java.util.*
 
+//création des données initiales (lors de la première initialisation)
 object DefaultData {
 	fun defaultFamilies():List<Family> {
 		val defaults = ArrayList<Family>()

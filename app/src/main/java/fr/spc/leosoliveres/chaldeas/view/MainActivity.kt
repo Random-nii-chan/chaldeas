@@ -9,6 +9,8 @@ import fr.spc.leosoliveres.chaldeas.R
 
 class MainActivity : AppCompatActivity() {
 
+	//TODO plusieurs barres d'outils pour les différents fragments
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)

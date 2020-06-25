@@ -5,8 +5,13 @@ import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.google.gson.annotations.Expose
 
+//collection de mesures, utilisé pour la génération du rapport et l'enregistrement de son modèle
+//les champs sont observables : lors de la modification d'un d'entre eux les observateurs
+//de l'objet sont avertis du changement
 data class Family(private val _name:String) : BaseObservable() {
 	@Bindable
+	//utilisé pour montrer les valeurs à prendre en compte lors de la conversion par gson
+	//voir reporteditviewmodel
 	@Expose
 	var name : String = _name
 	set(value) {
@@ -20,11 +25,6 @@ data class Family(private val _name:String) : BaseObservable() {
 	set(value) {
 		field=value
 		notifyPropertyChanged(BR.measures)
-	}
-
-	constructor(_name:String, _measures:ArrayList<Measure>) : this(_name) {
-		name = _name
-		measures = _measures
 	}
 
 	fun getIndex(m:Measure):Int {

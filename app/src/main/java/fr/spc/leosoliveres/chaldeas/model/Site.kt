@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
+//utilisation de parcelize pour transfert entre fragments sitelistfragment et sitedetailfragment
 @Parcelize
 @Entity(tableName = "sites")
 data class Site(
@@ -16,6 +17,7 @@ data class Site(
     val access: String = "Type d'accès non renseigné",
     val owner: String = "Propriétaire non renseigné",
     val type: String = "Type d'installation inconnu",
+    //clé primaire autogénérée (doit être initialisée à 0 pour fonctionner)
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name="site_id") val id:Long = 0
 ) : Parcelable {
 

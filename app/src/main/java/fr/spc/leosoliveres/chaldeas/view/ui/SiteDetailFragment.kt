@@ -15,14 +15,16 @@ import fr.spc.leosoliveres.chaldeas.viewmodel.SiteDetailViewModel
 import fr.spc.leosoliveres.chaldeas.viewmodel.factory.SiteDetailViewModelFactory
 import kotlinx.android.synthetic.main.fragment_site_detail.*
 
+//fragment d'inspection d'un site/création d'un rapport pour ce site
 class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 	private lateinit var viewModelFactory:SiteDetailViewModelFactory
 	private lateinit var viewModel: SiteDetailViewModel
 	private lateinit var listAdapter:ExpandableDynamicFormAdapter
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-		// Inflate the layout for this fragment
+		//obtention du site à afficher avec les arguments
 		val site = requireArguments().getParcelable<Site>("site")!!
+		//création du viewmodel
 		viewModelFactory = SiteDetailViewModelFactory(requireActivity().application,site)
 		viewModel = viewModelFactory.create(SiteDetailViewModel::class.java)
 
@@ -31,20 +33,21 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		//TODO mettre en place l'adaptateur du dernier rapport créé
+		//mettre en place l'adaptateur du formulaire dynamique de création du rapport
 		listAdapter = ExpandableDynamicFormAdapter(requireContext(),viewModel.formTemplate)
 		dynamic_form.setAdapter(listAdapter)
-	}
-
-	override fun onActivityCreated(savedInstanceState: Bundle?) {
-		super.onActivityCreated(savedInstanceState)
-		fillSiteGeneralInfo(viewModel.site)
-
 		report_selector_spinner.adapter = ArrayAdapter(
 			requireContext(),
 			android.R.layout.simple_spinner_dropdown_item,
 			viewModel.getPreviousReportsSummaries()
 		)
+	}
 
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
+		super.onActivityCreated(savedInstanceState)
+		fillSiteGeneralInfo(viewModel.site)
+		//observateur sur la liste des rapports précédemments enregistrés
 		viewModel.previousReports.observe(viewLifecycleOwner, Observer { newReports ->
 			val strings = ArrayList<String>()
 			if(newReports.isEmpty()) {
@@ -55,11 +58,13 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 			updateReportSummary(strings)
 		})
 
+		//clic sur le bouton d'enregistrement du rapport
 		save_report.setOnClickListener {
 			viewModel.saveReport()
 		}
 	}
 
+	//changer l'adaptateur du spinner des rapports précédents
 	private fun updateReportSummary(strings:List<String>) {
 		report_selector_spinner.adapter = ArrayAdapter(
 			requireContext(),
@@ -68,6 +73,7 @@ class SiteDetailFragment : Fragment(R.layout.fragment_site_list) {
 		)
 	}
 
+	//remplir les informations générales du site
 	private fun fillSiteGeneralInfo(site:Site) {
 		name.text = site.name
 		infrastructure_type.text = site.type

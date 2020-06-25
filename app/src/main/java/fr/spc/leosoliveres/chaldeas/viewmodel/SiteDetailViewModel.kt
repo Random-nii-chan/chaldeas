@@ -19,6 +19,7 @@ import org.json.JSONArray
 import java.io.File
 import java.io.FileOutputStream
 
+//viewmodel pour les détails d'un site
 class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 	private val siteDao: SiteDao = AppDatabase.getDatabase(app)!!.siteDao()
 	private val reportDao: ReportDao = AppDatabase.getDatabase(app)!!.reportDao()
@@ -31,10 +32,13 @@ class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 	var previousReports: LiveData<List<ReportWithRecords>>
 
 	init {
+		//obtenir le format json du rapport
 		formTemplate = gson.fromJson(getPrefsJSON(app),object: TypeToken<ArrayList<Family>>(){}.type)
+		//obtenir la liste des précédents rapports
 		previousReports = repo.getReportsForSite(site.id)
 	}
 
+	//obtenir la liste des précédents rapports sous forme d'une liste de strings
 	fun getPreviousReportsSummaries():ArrayList<String> {
 		val al = ArrayList<String>()
 		if(previousReports.value != null) {
@@ -45,6 +49,7 @@ class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 		return al
 	}
 
+	//obtenir les préférences JSON, les créer si elles n'existent pas
 	private fun getPrefsJSON(ctx:Context):String {
 		var file = File(ctx.filesDir, ReportEditViewModel.PREFS_FILENAME)
 		if(!file.exists()) {
@@ -66,6 +71,7 @@ class SiteDetailViewModel(app: Application, var site:Site): ViewModel() {
 	}
 
 	fun saveReport() {
+		//TODO fonction de sauvegarde du rapport
 		//repo.insertReport()
 	}
 }

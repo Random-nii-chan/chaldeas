@@ -9,6 +9,8 @@ import fr.spc.leosoliveres.chaldeas.model.Report
 
 @Dao
 abstract class RecordDao {
+	//utilisé lors de l'insertion d'un nouveau rapport dans la BDD room
+	//TODO enregistrement d'un rapport dans Room (DAO)
 	@Transaction
 	open fun insertReportWithRecords(report: Report, records : List<Record>) {
 		val reportId = insertReport(report)

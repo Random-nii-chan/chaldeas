@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.spc.leosoliveres.chaldeas.R
 import fr.spc.leosoliveres.chaldeas.model.Site
 
+//adaptateur de la recyclerview des sites
 class SitesAdapter(private val sites: List<Site>?, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 		val view:View = LayoutInflater.from(parent.context).inflate(R.layout.site_row, parent, false)

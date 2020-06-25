@@ -24,21 +24,40 @@ import kotlinx.android.synthetic.main.dialog_measure_edit.view.*
 import kotlinx.android.synthetic.main.fragment_report_edit.*
 import kotlin.collections.ArrayList
 
+//fragment d'édition du rapport
 class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 
 	private lateinit var viewModel:ReportEditViewModel
 	private lateinit var viewModelFactory: ReportEditViewModelFactory
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+		//création du viewmodel
 		viewModelFactory = ReportEditViewModelFactory(requireContext())
 		viewModel = ViewModelProviders.of(this,viewModelFactory).get(ReportEditViewModel::class.java)
 
 		return inflater.inflate(R.layout.fragment_report_edit, container, false)
 	}
 
+	//mise en place des fonctions appelées lors du clic sur bouton
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		view.findViewById<Button>(R.id.add_measure).setOnClickListener {
+		add_measure.setOnClickListener {
 			showMeasureCreationDialog(context)
+		}
+
+		save_button.setOnClickListener { _ ->
+			viewModel.saveJson(requireContext())
+		}
+
+		rename_button.setOnClickListener {
+			showFamilyRenameDialog(context,viewModel.currentFamily.value!!.name)
+		}
+
+		add_family.setOnClickListener {
+			showFamilyCreateDialog(context)
+		}
+
+		delete_family.setOnClickListener {
+			showFamilyDeleteDialog(context,viewModel.currentFamily.value!!)
 		}
 	}
 
@@ -46,11 +65,11 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 	override fun onActivityCreated(savedInstanceState: Bundle?) {
 		super.onActivityCreated(savedInstanceState)
 
+		//mise en place des adpatateurs
 		measure_recyclerview.layoutManager = LinearLayoutManager(activity)
 		measure_recyclerview.adapter = MeasuresAdapter(viewModel.currentFamily.value!!.measures,this)
-
 		family_spinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,viewModel.familiesToString())
-
+		//mise en place du comportement du spinner (menu déroulant)
 		family_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 			override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
 				viewModel.changeFamily(position)
@@ -58,10 +77,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 			override fun onNothingSelected(parent: AdapterView<*>?) {}
 		}
 
-		save_button.setOnClickListener { _ ->
-			viewModel.saveJson(requireContext())
-		}
-
+		//mise en place des observateurs
 		viewModel.currentFamily.observe(viewLifecycleOwner, Observer { newFamily ->
 			updateMeasures(newFamily)
 			updateFamilyName(newFamily.name)
@@ -82,39 +98,30 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 			}
 			updateFamilyList(strings)
 		})
-
-		rename_button.setOnClickListener {
-			showFamilyRenameDialog(context,viewModel.currentFamily.value!!.name)
-		}
-
-		add_family.setOnClickListener {
-			showFamilyCreateDialog(context)
-		}
-
-		delete_family.setOnClickListener {
-			showFamilyDeleteDialog(context,viewModel.currentFamily.value!!)
-		}
 	}
 
+	//changement de l'adaptateur de la liste des mesures
 	private fun updateMeasures(newFamily:Family) {
 		measure_recyclerview.swapAdapter(MeasuresAdapter(newFamily.measures,this),true)
 	}
 
+	//renommer la famille en cours (uniquement le titre)
 	private fun updateFamilyName(newName:String) {
 		family_name.text = newName
 	}
 
+	//mettre à jour l'adaptateur du spinner de la liste des familles
 	private fun updateFamilyList(list:ArrayList<String>) {
 		family_spinner.adapter = ArrayAdapter(activity?.baseContext!!,android.R.layout.simple_spinner_dropdown_item,list)
 		family_spinner.setSelection(viewModel.getFamilyIndex())
 	}
 
+	//affiche boîte de dialogue pour la création d'une mesure
 	@SuppressLint("InflateParams")
 	private fun showMeasureCreationDialog(ctx: Context?){
 		val builder = AlertDialog.Builder(ctx)
 		val inflater = LayoutInflater.from(ctx)
 		val dialogView = inflater.inflate(R.layout.dialog_measure_edit,null)
-
 		builder.setView(dialogView)
 		builder.setTitle(R.string.add_measure).apply{
 			setPositiveButton(R.string.add) { _: DialogInterface, _: Int ->
@@ -132,6 +139,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		builder.show()
 	}
 
+	//affiche boîte de dialogue renommage de la famille en cours
 	private fun showFamilyRenameDialog(ctx:Context?,autofill:String) {
 		val builder = AlertDialog.Builder(ctx)
 		val dialogView = EditText(ctx)
@@ -150,6 +158,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		builder.show()
 	}
 
+	//affiche boîte de dialogue création d'une famille
 	private fun showFamilyCreateDialog(ctx:Context?) {
 		val builder = AlertDialog.Builder(ctx)
 		val dialogView = EditText(ctx)
@@ -168,6 +177,7 @@ class ReportEditFragment : Fragment(R.layout.fragment_report_edit){
 		builder.show()
 	}
 
+	//affiche boîte de dialogue suppression d'une famille
 	private fun showFamilyDeleteDialog(ctx:Context?,f:Family) {
 		val builder = AlertDialog.Builder(ctx)
 		builder.setTitle(R.string.delete_family).apply{
