@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/siteListFragment"
-        android:name="fr.spc.leosoliveres.nightly.view.ui.SiteListFragment"
+        android:name="fr.spc.leosoliveres.chaldeas.view.ui.SiteListFragment"
         android:label="SiteListFragment" >
         <action
             android:id="@+id/action_siteListFragment_siteDetailFragment"
@@ -18,17 +18,17 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim">
             <argument
                 android:name="site"
-                app:argType="fr.spc.leosoliveres.nightly.model.Site" />
+                app:argType="fr.spc.leosoliveres.chaldeas.model.Site" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/siteDetailFragment"
-        android:name="fr.spc.leosoliveres.nightly.view.ui.SiteDetailFragment"
+        android:name="fr.spc.leosoliveres.chaldeas.view.ui.SiteDetailFragment"
         android:label="fragment_site_detail"
         tools:layout="@layout/fragment_site_detail" />
     <fragment
         android:id="@+id/reportEditFragment"
-        android:name="fr.spc.leosoliveres.nightly.view.ui.ReportEditFragment"
+        android:name="fr.spc.leosoliveres.chaldeas.view.ui.ReportEditFragment"
         android:label="ReportEditFragment" />
     <action
         android:id="@+id/action_global_editFragment"
